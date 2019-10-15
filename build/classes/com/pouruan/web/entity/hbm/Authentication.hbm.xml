@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+	<class name="Authentication" table="`authentication`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="userId" type="java.lang.Integer" column="`user_id`">
+		<!-- 加上这句就会保持两个表的主键一致，增加此对象的时候，hibernate就会强制必须指定user -->
+		<!-- 	<generator class="foreign" >
+				指定引用关联实体的属性名
+	       		 <param name="property">user</param>
+	    		</generator> -->
+    	</id>
+		<property name="authenticationKey" column="`authentication_key`" type="string" not-null="true" length="64"/>
+		<property name="updateTime" column="`update_time`" type="java.sql.Timestamp" not-null="true" />
+		<property name="loginIp" column="`login_ip`" type="string" not-null="true" length="32"/>
+		<property name="loginTime" column="`login_time`" type="java.sql.Timestamp" not-null="true" />
+		<!-- 可以根据authentication加载user这里的
+			constrained="true"表示当前主键Person的id主键，还是一个外键 
+		-->
+		<one-to-one name="user" constrained="true"    lazy = "false"/>
+	</class>
+</hibernate-mapping>

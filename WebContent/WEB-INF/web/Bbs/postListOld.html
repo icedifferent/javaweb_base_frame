@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>帖子列表</title>
+<#include "/commonTemplet/header.html"/>
+<link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/forum.css" type='text/css' />
+<link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/style.css" type='text/css' />
+
+</head>
+ <#assign leftside ="luntan"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+
+			<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>		
+		<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>	
+				<form action="./postList.do" method="POST">
+							<div class="input-group input-group-ind">
+								<input type="text" name="title" id="findVar" maxlength="11" class="form-control1 input-search" style="width:92%" placeholder="搜索">
+								<select >
+								<option onclick="changeName('title')">标题</option>
+								<option onclick="changeName('userId')">用户ID</option>	
+								</select>
+								<input type="hidden" name="_csrf" value="${_csrf.token}">
+								<span class="input-group-btn">
+									<button class="btn btn-success" type="submit"><i class="fa fa-search icon-ser"></i></button>
+								</span>
+							</div><!-- Input Group -->
+							
+					</form>
+		<div class="main cc">
+			<div id="cloudwind_thread_top"></div>
+			<div class="gc09 main_body">
+				<div class="clpd1 main_content">
+					<div class="box_wrap thread_page J_check_wrap">
+						<nav>
+							<div class="cc content_nav">
+									<div class="fr content_filter"><a href="./postList.do?orderType=1<#list RequestParameters?keys as key>&${key}=${RequestParameters[key]}</#list>" class="<#if RequestParameters["orderType"]==1>current</#if>" data-langur="bpo_sort_lastpost">最新发帖</a><span>|</span><a href="./postList.do?orderType=0<#list RequestParameters?keys as key>&${key}=${RequestParameters[key]}</#list>" class=" <#if RequestParameters["orderType"]==0>current</#if>" data-langur="bpo_sort_lastreply">最后回复</a></div>
+								<ul class="fl cc" id="hashpos_ttype">
+									<li class=" current"><a href="" data-langur="bpo_defaultList">看帖</a></li>
+								<li ><a href="./addPost.do" data-langur="bpo_defaultList">发帖</a></li>
+								
+								</ul>
+							</div>
+						</nav>
+						<div class="thread_posts_list">
+<div width="100%" id="J_posts_list" summary="帖子列表">
+
+
+  <#list postList as post>		
+<div class="cc polist">
+	<div class="author"><a class="J_user_card_show" data-uid="${post.user.userId}" href="${base}/User/Message/send.do?toUserId=${post.user.userId}"><img class="J_avatar" src="<#if post.user.portrait_img??>${base}/res/upload/portrait/${post.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" data-type="small" width="50" height="50" alt="${post.user.userName}" /></a></div>
+	<div class="subject">
+		<p class="title">
+					<span class="posts_icon"><i class="J_topic_derectool icon_topic" title="普通帖"></i></span>
+					<a href="./readPost.do?postId=${post.id}" class="st" style="" title="${post.title}">${post.title}</a>
+		</p>
+		<p class="info">
+			<span class="posts_icon"><i class="icon_img" title="图片帖"></i></span>
+			<span class="isAuthor" data-langur="bpo_author">作者</span>: <a class="J_user_card_show" data-uid="1" href="${base}/User/Message/send.do?toUserId=${post.user.userId}">${post.user.userName}</a><span >${post.addDate}</span>
+		</p>
+	</div>
+	<div class="counter" >
+	<span class="replies">${post.replyCount}</span>
+	<span class="hits">${post.readTimes}</span>
+	</div>
+</div>
+</#list>
+</div>
+					   </div>
+					 </div>
+					 </div>
+					 
+					 <div class="clpd1 main_content_right">
+						<div class="thread_posts_list" >
+						<br/><br/>
+						<nav  >
+						   <#list moduleList as module>
+						  
+							<div  class="fr content_filter">
+									<a href="./postList.do?moduleId=${module.id}" class="<#if moduleId?? &&moduleId==module.id>current</#if>" data-langur="bpo_sort_lastpost">${module.name}</a>
+							</div>
+							<#if module_index%2==0><br /><br /></#if>
+							 </#list>
+						</nav>
+					 </div>
+					  </div>
+					  </div>
+					 </div>
+					     <!-- 导入自定义ftl -->  
+    <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./postList.do" recordCount=postSize/>  
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+<script type="text/javascript">
+           function changeName(v) {
+        	  document.getElementById("findVar").name=v;
+           }
+ </script>
+</html>

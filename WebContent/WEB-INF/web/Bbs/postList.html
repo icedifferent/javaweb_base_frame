@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xml:lang="zh-CN">
+ <head> 
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /> 
+  <meta name="viewport" content="width=device-width" /> 
+  <title>328宿舍论坛</title> 
+  <meta name="description" content="良好的互动交流平台。" /> 
+  <meta name="keywords" content="328宿舍论坛" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="pouruan" />
+<link href="${base}/res/templet/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<!-- lined-icons -->
+<link rel="stylesheet" href="${base}/res/templet/css/icon-font.min.css" type='text/css' />
+<!-- //lined-icons -->
+<!-- chart -->
+<script src="${base}/res/templet/js/Chart.js"></script>
+<!-- //chart -->
+
+<link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/forum.css" type='text/css' />
+<link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/style.css" type='text/css' />  
+<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/css/zh-cn/index.css?v=1496318117" /> 
+<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/css/zh-cn/homepage.css?v=1496318117" /> 
+<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/v3_1/css/main.min.css">
+<script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lang/zh-cn.js"></script> 
+<script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lib/jquery.min.js"></script> 
+<script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/base.js"></script> 
+<script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lib/jquery.lazyload.js"></script> 
+<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/css/zh-cn/sign.css">
+ </head> 
+ <body> 
+  <script>switchMobile.init()</script> 
+  <div class="main"> 
+   <style>
+    .xmcomm_header_wrap{position:relative;height:50px;min-width:990px;background:#5b5a5a;background:rgba(0,0,0,0.67);-webkit-font-smoothing:antialiased}.xmcomm_header{position:relative;height:50px;margin:0 auto}.xmcomm_header .logo{width:150px;height:50px;margin-left:5px;text-indent:-99999px;display:inline-block;position:absolute;left:0;background:url("${base}/res/templet/extend/index/statics/images/logo_cn.png") 0 center no-repeat}.xmcomm_header .mobile_qr{position:absolute;left:162px;top:0;width:70px;margin-left:5px;font-size:14px;z-index:100}.xmcomm_header .mobile_qr .mobile{display:block;line-height:50px;padding-left:14px;background:url("${base}/res/templet/extend/index/statics/images/header_mobile.png") 0 center no-repeat;color:#ff7e3e}.xmcomm_header .mobile_qr .qr{display:none;width:151px;padding:16px 16px 10px;border:1px solid #e6e6e6;background:#fff}.xmcomm_header .mobile_qr .qr span{display:block;height:151px;background:url("${base}/res/templet/extend/index/statics/images/header_qr.png") center no-repeat}.xmcomm_header .mobile_qr .qr strong{display:block;line-height:24px;color:#454545;text-align:center}.xmcomm_header .mobile_qr:hover .qr{display:block}.xmcomm_header .header_icon{width:16px;vertical-align:middle;text-indent:-9999px;display:inline-block;background:url("${base}/res/templet/extend/index/statics/images/header_icon.png") no-repeat}.xmcomm_header .header_icon.header_revise{height:16px;margin-top:-3px;background-position:0 -13px}.xmcomm_header .header_icon.header_search{height:16px;margin-right:5px;background-position:0 -31px}.xmcomm_header .header_menu{position:absolute;left:50%;line-height:50px;margin:0 0 0 -243px;z-index:100}.xmcomm_header .header_menu li{float:left;padding:0 8px;color:#fff;font-size:16px;z-index:20}.xmcomm_header .header_menu li:last-child{padding:0}.xmcomm_header .header_menu li:last-child:after{content:".";width:0;opacity:0}.xmcomm_header .header_menu li a,.xmcomm_header .header_menu li span{color:#fff;cursor:pointer}.xmcomm_header .header_menu li a:hover,.xmcomm_header .header_menu li span:hover{color:#ff8b3d}.xmcomm_header .header_menu li span{*float:left;*padding-right:20px}.xmcomm_header .header_menu li span i{width:10px;height:10px;background-position:0 -49px;display:inline-block;margin:6px 0 0 5px}.xmcomm_header .header_menu li .header_menu_list,.xmcomm_header .header_menu li .header_more_list{top:-100px;height:0;max-height:0;opacity:0;z-index:-1}.xmcomm_header .header_menu li:hover .header_menu_list,.xmcomm_header .header_menu li:hover .header_more_list{top:50px;height:auto;max-height:none;opacity:1}.xmcomm_header .header_menu_list{position:absolute;left:-164px;width:990px;padding:15px 0;border:1px solid #e6e6e6;background:#fff;z-index:11;overflow:hidden}.xmcomm_header .header_menu_list dl{line-height:42px}.xmcomm_header .header_menu_list dl dt{float:left;width:140px;color:#ff6700;text-align:right}.xmcomm_header .header_menu_list dl dd{margin-left:150px;border-bottom:1px solid #eee}.xmcomm_header .header_menu_list dl:last-child dd{border-bottom:none}.xmcomm_header .header_menu_list ul{overflow:auto}.xmcomm_header .header_menu_list ul li{float:left;padding:0;width:155px;list-style:none;color:#cacaca;text-align:left;white-space:nowrap}.xmcomm_header .header_menu_list ul li:before{content:"";display:inline-block;width:6px;height:6px;margin-right:10px;margin-top:18px;background:#cacaca;border-radius:50%;vertical-align:top}.xmcomm_header .header_menu_list ul li a{color:#616161}.xmcomm_header .header_menu_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list{position:absolute;left:544px;width:182px;padding:35px 0;background:#fff;border:1px solid #e6e6e6;z-index:11;overflow:hidden}.xmcomm_header .header_more_list ul{margin:-6px 0 0 1px;width:182px}.xmcomm_header .header_more_list ul li{float:left;padding:0;margin:0 0 0 48px;width:133px;height:30px;line-height:30px;list-style-type:disc;border-right:1px solid #dfdfdf;color:#6d6d6d;font-size:14px;text-align:left}.xmcomm_header .header_more_list ul li a{color:#6d6d6d;line-height:30px}.xmcomm_header .header_more_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list ul li.hide{display:none}@media screen and (max-width:1500px){.xmcomm_header{width:990px}.xmcomm_header .logo,.xmcomm_header .mobile_qr{margin-left:0}.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}}@media \0screen\0{.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}.xmcomm_header .header_icon.header_revise{margin-top:16px}}
+</style> 
+   <div class="xmcomm_header_wrap"> 
+    <div class="xmcomm_header"> 
+     <a href="${base}/index.do" class="logo">328宿舍</a> 
+     <ul class="header_menu"> 
+      <li><a href="${base}/index.do">首页</a></li> 
+      <li><a href="${base}/User/index.do">个人中心</a></li> 
+      <li> <a href="${base}/Ask/questionList.do">问答中心</a> </li>
+       <li> <a href="${base}/Ask/addQuestion.do">提问</a> </li>  
+      <li> <a href="${base}/Bbs/addPost.do">发帖</a> </li> 
+     </ul> 
+    </div> 
+   </div> 
+   <div class="head_wrap"> 
+    <div class="header wrap_990"> 
+     <div class="user_wrap"> 
+	 
+      <div class="topbar-info J_userInfo " id="login"> 
+	<#if aopUserInfo??>
+	  <a class="loginbtn" href="${base}/User/index.do">你好：${aopUserInfo.userName}</a> 
+	 <#else>
+	  <a class="loginbtn" href="${base}/login.do">登录</a> 
+       <a href="${base}/register.do" class="registerbtn">注册</a> 
+  
+	 </#if>
+      
+	  </div>
+     </div> 
+    </div> 
+   </div> 
+
+   <div class="container_wrap wrap_990 clearfix"> 
+    <div class="contain_left fr"> 
+     <div class="left_wrap"> 
+      <div class="sidebarplate" onclick="_hmt.push(['_trackEvent','bbs首页','侧边栏', '版块推荐']);"> 
+       <div class="sidebarplate_tab"> 
+        <div class="tab"> 
+         <span class="on">版块推荐</span> 
+         <span>其他</span> 
+        </div> 
+       </div> 
+       <div> 
+        <ul class="on"> 
+		 <#list moduleList as module>
+			<li><a href="./postList.do?moduleId=${module.id}" " target="_blank" >${module.name}</a></li> 
+		</#list>
+        </ul> 
+        <ul> 
+        	 <#list moduleList as module>
+			<li><a href="./postList.do?moduleId=${module.id}" " target="_blank" >${module.name}</a></li> 
+		</#list>
+        </ul> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="mibbs_sign" onclick="_hmt.push(['_trackEvent','bbs首页','侧边栏', '签到']);"> 
+      <div class="mibbs_con" style="margin-bottom:10px;"  > 
+       <a class="mibbs_signpanel JD_sign "  id="JD_sign"> 
+       <div >
+       			<div class="font" id="signUp"  onclick="signUp(this)">
+         		签到
+        </div> </div></a> 
+       
+        
+      </div> 
+     </div> 
+
+     <div class="left_wrap"> 
+      <div class="con"> 
+       <div class="hotspot"> 
+        <h3>328宿舍二维码</h3> 
+        <a href="http://" target="_blank" class="shareActive_img"><img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fkz9z8dzlxj308c08cjrc.jpg
+" class="two_dimension_code" /></a>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="contain_right fl clearfix ">
+     <a> 
+      <div class="hostplate"> 
+       <span class="name">热门版块:</span> 
+       <ul class="hostplate_con clearfix"> 
+			这是一个神秘的地方
+			
+		</ul> 
+				
+      </div></a> 
+	  
+     <div class="theme"> 
+      <div class="theme_con"> 
+       <div class="theme_nav"> 
+	   <a href="./postList.do?orderType=1<#list RequestParameters?keys as key>&${key}=${RequestParameters[key]}</#list>" class="theme_nav_list <#if RequestParameters["orderType"]==1>current</#if>" data-langur="bpo_sort_lastpost">最新发帖</a><span>|</span><a href="./postList.do?orderType=0<#list RequestParameters?keys as key>&${key}=${RequestParameters[key]}</#list>" class="theme_nav_list <#if RequestParameters["orderType"]==0>current</#if>" data-langur="bpo_sort_lastreply">最后回复</a>
+        <a href="${base}/Bbs/addPost.do" class="btn theme_nav_btn" onclick="_hmt.push(['_trackEvent', 'bbs首页', '内容区', '发表新主题']);">发表新主题</a> 
+       </div> 
+	   
+       <ul> 
+	   <hr/>
+	   <form action="./postList.do" method="POST">
+					   
+						   	<div class="search_index">
+						   <div class="search_bar">						
+								<div class="drop_menu">
+									<div class="drop_menu_toggle" style="height:48px" >
+											<select >
+												<option onclick="changeName('title')">标题</option>
+												<option onclick="changeName('userId')">用户ID</option>	
+											</select>
+									</div>
+								</div>	
+								<input type="text" name="title" style=" height:50px;width:60%"   id="findVar" maxlength="11" class="search_key" placeholder="请输入搜索内容">
+								<input type="hidden" name="_csrf" id="_csrf" value="${_csrf.token}">
+								<button  class="search_btn" type="submit">搜索</button>
+							
+							</div>	
+								</div>	
+					</form>
+	     <#list postList as post>
+        <li class="theme_list clearfix" u-id="${post.user.userId}"> 
+         <div class="theme_list_img"> 
+		
+          <a href="${base}/User/Message/send.do?toUserId=${post.user.userId}" class="headportrait" target="_blank" rel="noopener noreferrer"> <img class="user_head" src="${base}/res/templet/extend/index/statics/images/noavatar_small.gif" data-original=" <#if post.user.portrait_img??>${base}/res/upload/portrait/${post.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>?&amp;width=50&amp;height=50" /> </a> 
+         </div> 
+         <div class="theme_list_con"> 
+          <div class="title"> 
+           <a href="readPost.do?postId=${post.id}" class="title_name " target="_blank" rel="noopener noreferrer" onclick="_msq.push(['trackEvent', 'tj-1-1', 'readPost.do?postId=${post.id}', 'mibbis_c']);">${post.title}</a> 
+         
+          </div> 
+          <div class="auth_msg clearfix"> 
+           <a href="${base}/User/Message/send.do?toUserId=${post.user.userId}" class="user_name" target="_blank" rel="noopener noreferrer">${post.user.userName}</a> 
+           <span class="time txt">${post.addDate}</span> 
+<a href="./postList.do?moduleId=${post.module.id}" class="time txt">${post.module.name}</a>
+           <p class="see"> <span class="numb msg"><i></i>${post.replyCount}</span> <span class="numb view"><i></i>${post.readTimes}</span> </p> 
+          </div> 
+         </div> </li> 
+       </#list>
+
+       </ul> 
+       <div class="base_widget_paging"> 
+        <div class="paging_widget_2"> 
+     
+       <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./postList.do" recordCount=postSize/>  
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/personLayer.js"></script> 
+    </div> 
+    <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/slide.js"></script> 
+   </div> 
+   <div class="bannerBottom"> 
+    <a href="http://bbs.xiaomi.cn/app/download" target="_blank" rel="noopener noreferrer" class="download_m"><img src="${base}/res/templet/extend/index/statics/images/banner_bottom_m.png" /></a> 
+   </div> 
+  </div> 
+  <div class="footer"> 
+
+   <div class="footertop"> 
+    <div class="wrap_990"> 
+     <div class="footertop_con"> 
+      <dl> 
+       <dd>
+        <a href="http://www.cnmo.com/" target="_blank" rel="noopener noreferrer">手机中国</a>
+       </dd> 
+       <dd>
+        <a href="http://bbs.kuaipan.cn/" target="_blank" rel="noopener noreferrer">金山快盘</a>
+       </dd> 
+      </dl> 
+      <dl> 
+       <dd>
+        <a href="http://www.leiphone.com/" target="_blank" rel="noopener noreferrer">雷锋网</a>
+       </dd> 
+       <dd>
+        <a href="http://www.chinaz.com/" target="_blank" rel="noopener noreferrer">站长之家</a>
+       </dd> 
+      </dl> 
+      <dl> 
+       <dd>
+        <a href="http://www.mydrivers.com/" target="_blank" rel="noopener noreferrer">驱动之家</a>
+       </dd> 
+       <dd>
+        <a href="http://bbs.feng.com/" target="_blank" rel="noopener noreferrer">威锋论坛</a>
+       </dd> 
+      </dl> 
+      <dl> 
+       <dd>
+        <a href="http://mobile.zol.com.cn/" target="_blank" rel="noopener noreferrer">ZOL手机频道</a>
+       </dd> 
+       <dd>
+        <a href="http://bbs.zhiyoo.com/" target="_blank" rel="noopener noreferrer">安卓网</a>
+       </dd> 
+      </dl> 
+      <dl> 
+       <dd>
+        <a href="http://bbs.mumayi.com/" target="_blank" rel="noopener noreferrer">安卓论坛</a>
+       </dd> 
+       <dd>
+        <a href="http://www.znds.com/" target="_blank" rel="noopener noreferrer">智能电视网</a>
+       </dd> 
+      </dl> 
+      <dl> 
+       <dd>
+        <a href="http://www.igao7.com/" target="_blank" rel="noopener noreferrer">爱搞机</a>
+       </dd> 
+       <dd>
+        <a href="http://www.tvhome.com/" target="_blank" rel="noopener noreferrer">电视之家</a>
+       </dd> 
+      </dl> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="footerdown"> 
+    <div class="wrap_990"> 
+     <a href="http://" class="milogo">mi</a> 
+     <a href="http://" class="link">14328.com</a> 
+     <span>京ICP证14328号 京ICP备14328号 <a target="_blank" rel="noopener noreferrer" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" style="cursor:pointer;color: white;">京公网安备11010802020134号</a></span> 
+    </div> 
+   </div> 
+  </div>  
+  <script type="text/javascript">
+           function changeName(v) {
+        	  document.getElementById("findVar").name=v;
+           }
+           function signUp() {
+        	  $.ajax({
+		             type: "POST",
+		             url: "${base}/User/Extend/SignAction/Sign.do",
+		             data: {_csrf:$("#_csrf").val()},
+		             dataType: "json",
+		             success: function(data){
+		             //alert("你已经签到了");
+		             		if(data.status==1){
+								$('#signUp').text("已签");
+        	 				    $('.mibbs_con .mibbs_signpanel').css('background-color','#D7D7D7');
+		             		} else{
+		             			alert("你已经签到了");
+		             		}
+		             }
+		         });
+
+           }
+ </script>
+  </body>
+</html>

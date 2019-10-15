@@ -1,0 +1,115 @@
+<#assign security=JspTaglibs["/WEB-INF/securityTlds/security.tld"]/>
+    <!-- left side start-->
+      <div class="left-side sticky-left-side">
+			<!--logo and iconic logo start-->
+			<div class="logo">
+				<h1><a href="index.html">POURUAN <span>User</span></a></h1>
+			</div>
+			<div class="logo-icon text-center">
+				<a href="${base}/index.do"><i class="lnr lnr-home"></i> </a>
+			</div>
+
+			<!--logo and iconic logo end-->
+			<div class="left-side-inner">
+
+				<!--sidebar nav start-->
+					<ul class="nav nav-pills nav-stacked custom-nav">
+						<li class="<#if leftside=="zhuye">active<#else></#if>">
+						<a href="${base}/User/index.do"><i class="lnr lnr-screen"></i><span>主页</span></a></li>
+						<li class="<#if leftside=="shezhi">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-cog"></i>
+								<span>个人设置</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/User/editInfo.do">修改个人资料</a> </li>
+									<li><a href="${base}/User/resetPwd.do">修改密码</a></li>
+								</ul>
+						</li>
+			
+					<li class="<#if leftside=="xiaoxi">active<#else>menu-list</#if>">
+					    <a href="#"><i class="lnr lnr-envelope"></i> <span>站内消息</span></a>  
+							<ul class="sub-menu-list">
+									<li><a href="${base}/User/Message/send.do">发送消息</a> </li>
+									<li><a href="${base}/User/Message/listMessage.do">查看消息</a></li>
+							</ul>
+						</li>
+						<@security.authorize  access="hasRole('ROLE_ADMIN')">
+							<li class="<#if leftside=="juese">active<#else>menu-list</#if>">
+					    <a href="#"><i class="lnr lnr-user"></i> <span>角色管理</span></a>  
+							<ul class="sub-menu-list">
+									<li><a href="${base}/Admin/Role/addRole.do">增加角色</a> </li>
+									<li><a href="${base}/Admin/Role/listAdmin.do">查看角色</a></li>
+							</ul>
+						</li>
+						</@security.authorize>   
+							<@security.authorize  access="hasRole('ROLE_ADMIN')">
+						<li class="<#if leftside=="yonghu">active<#else></#if>">
+							<a href="${base}/Admin/User/listUser.do">
+								<i class="lnr lnr-users"></i><span>用户管理</span>
+							</a>
+						</li>
+					<!--	<li class="<#if leftside=="music">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-database"></i>
+								<span>音乐管理</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/Admin/Extend/Music/addMusic.do">添加音乐</a> </li>
+									<li><a href="${base}/Admin/Extend/Music/listMusic.do">音乐列表</a></li>
+					
+								</ul>
+						</li>  -->
+						</@security.authorize>  
+						<@security.authorize  access="hasRole('ROLE_CUSTOMUSER')">
+					<!--	<li class="<#if leftside=="luntan">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-database"></i>
+								<span>论坛</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/Bbs/addPost.do">发表帖子</a> </li>
+									<li><a href="${base}/Bbs/postList.do">论坛帖子</a></li>
+					
+								</ul>
+						</li>
+						-->
+						 </@security.authorize>  
+							<@security.authorize  access="hasRole('ROLE_ADMIN') or hasRole('ROLE_BANZHU')">
+							
+							<li class="<#if leftside=="luntanguanli">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-database"></i>
+								<span>论坛管理</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/Admin/Extend/Bbs/moduleList.do">查看版块</a> </li>
+									<li><a href="${base}/Admin/Extend/Bbs/editModule.do">增加版块</a></li>
+									<li><a href="${base}/Admin/Extend/Bbs/postList.do">帖子管理</a></li>
+								</ul>
+						</li>
+						
+						
+							<li class="<#if leftside=="wendaguanli">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-database"></i>
+								<span>问答管理</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/Admin/Extend/Ask/questionList.do">问答管理</a></li>
+								</ul>
+						</li>
+						
+						<li class="<#if leftside=="peizhi">active<#else></#if>">
+							<a href="${base}/Admin/Config/editConfig.do">
+								<i class="lnr lnr-power-switch"></i><span>系统配置</span>
+							</a>
+						</li>
+					
+						
+						<li class="<#if leftside=="systemStatus">active<#else>menu-list</#if>">
+							<a href="#"><i class="lnr lnr-database"></i>
+								<span>系统状态</span></a>
+								<ul class="sub-menu-list">
+									<li><a href="${base}/Admin/System/systemStatus.do">系统环境</a> </li>
+									<li><a href="${base}/Admin/System/listLog.do">操作日志</a></li>
+									<li><a href="${base}/Admin/System/analysisData.do">系统数据</a></li>
+								</ul>
+						</li>
+				</@security.authorize>  
+						
+				</ul>
+				<!--sidebar nav end-->
+			</div>
+		</div>
+		<!-- left side end-->

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xml:lang="zh-CN">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width"/>
+						
+		<title id="titleha">${question.title}</title>
+    <link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/forum.css" type='text/css' />
+   <link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/style.css" type='text/css' />  
+ 	<link rel="stylesheet" type="text/css" href='${base}/res/templet/extend/index/statics/css/zh-cn/invitation.css?v=1498808901'>
+	<link rel="stylesheet" type="text/css" href='${base}/res/templet/extend/index/statics/css/zh-cn/datePicker.css?v=1496318116'>
+	  <!-- Bootstrap Core CSS -->
+	<link href="${base}/res/templet/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+	 
+ 
+ <!-- Custom CSS -->
+<link href="${base}/res/templet/css/style.css" rel='stylesheet' type='text/css' />
+    <style type="text/css">
+        #editor-trigger {
+            height: 200px;
+            /*max-height: 500px;*/
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+    <script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/lib/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href='http://s1.bbs.xiaomi.cn/statics/css/zh-cn/invitation.css?v=1498808883'>
+	<link rel="stylesheet" type="text/css" href='http://s1.bbs.xiaomi.cn/statics/css/zh-cn/datePicker.css?v=1496318116'>
+	<script src="${base}/res/templet/js/Chart.js"></script>
+  <link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/css/zh-cn/index.css?v=1496318117" /> 
+   <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lang/zh-cn.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/base.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lib/jquery.lazyload.js"></script> 
+
+	</head>
+	
+	<script type="text/javascript">
+function clickButton(answerId,questionId){
+         $.ajax({
+             type: "POST",
+             url: "./takeQuestion.do",
+             data: {'answerId':answerId,'questionId':questionId,'_csrf':"${_csrf.token}"},
+             dataType: "json",
+             success: function(data){
+             			if(data.status!=1){
+             				alert("已有采纳答案");
+             			}
+             			if(data.status==1){
+             				document.getElementById("shenhebuttun"+answerId).innerHTML="已采纳";
+             				document.getElementById("shenhebuttun"+answerId).disabled = true;
+             			}
+             		
+             		}
+             })
+}
+</script>
+	<body>
+		<script>switchMobile.init()</script>
+
+		<div class="main">
+   <style>
+    .xmcomm_header_wrap{position:relative;height:50px;min-width:990px;background:#5b5a5a;background:rgba(0,0,0,0.67);-webkit-font-smoothing:antialiased}.xmcomm_header{position:relative;height:50px;margin:0 auto}.xmcomm_header .logo{width:150px;height:50px;margin-left:5px;text-indent:-99999px;display:inline-block;position:absolute;left:0;background:url("${base}/res/templet/extend/index/statics/images/logo_cn.png") 0 center no-repeat}.xmcomm_header .mobile_qr{position:absolute;left:162px;top:0;width:70px;margin-left:5px;font-size:14px;z-index:100}.xmcomm_header .mobile_qr .mobile{display:block;line-height:50px;padding-left:14px;background:url("${base}/res/templet/extend/index/statics/images/header_mobile.png") 0 center no-repeat;color:#ff7e3e}.xmcomm_header .mobile_qr .qr{display:none;width:151px;padding:16px 16px 10px;border:1px solid #e6e6e6;background:#fff}.xmcomm_header .mobile_qr .qr span{display:block;height:151px;background:url("${base}/res/templet/extend/index/statics/images/header_qr.png") center no-repeat}.xmcomm_header .mobile_qr .qr strong{display:block;line-height:24px;color:#454545;text-align:center}.xmcomm_header .mobile_qr:hover .qr{display:block}.xmcomm_header .header_icon{width:16px;vertical-align:middle;text-indent:-9999px;display:inline-block;background:url("${base}/res/templet/extend/index/statics/images/header_icon.png") no-repeat}.xmcomm_header .header_icon.header_revise{height:16px;margin-top:-3px;background-position:0 -13px}.xmcomm_header .header_icon.header_search{height:16px;margin-right:5px;background-position:0 -31px}.xmcomm_header .header_menu{position:absolute;left:50%;line-height:50px;margin:0 0 0 -243px;z-index:100}.xmcomm_header .header_menu li{float:left;padding:0 8px;color:#fff;font-size:16px;z-index:20}.xmcomm_header .header_menu li:last-child{padding:0}.xmcomm_header .header_menu li:last-child:after{content:".";width:0;opacity:0}.xmcomm_header .header_menu li a,.xmcomm_header .header_menu li span{color:#fff;cursor:pointer}.xmcomm_header .header_menu li a:hover,.xmcomm_header .header_menu li span:hover{color:#ff8b3d}.xmcomm_header .header_menu li span{*float:left;*padding-right:20px}.xmcomm_header .header_menu li span i{width:10px;height:10px;background-position:0 -49px;display:inline-block;margin:6px 0 0 5px}.xmcomm_header .header_menu li .header_menu_list,.xmcomm_header .header_menu li .header_more_list{top:-100px;height:0;max-height:0;opacity:0;z-index:-1}.xmcomm_header .header_menu li:hover .header_menu_list,.xmcomm_header .header_menu li:hover .header_more_list{top:50px;height:auto;max-height:none;opacity:1}.xmcomm_header .header_menu_list{position:absolute;left:-164px;width:990px;padding:15px 0;border:1px solid #e6e6e6;background:#fff;z-index:11;overflow:hidden}.xmcomm_header .header_menu_list dl{line-height:42px}.xmcomm_header .header_menu_list dl dt{float:left;width:140px;color:#ff6700;text-align:right}.xmcomm_header .header_menu_list dl dd{margin-left:150px;border-bottom:1px solid #eee}.xmcomm_header .header_menu_list dl:last-child dd{border-bottom:none}.xmcomm_header .header_menu_list ul{overflow:auto}.xmcomm_header .header_menu_list ul li{float:left;padding:0;width:155px;list-style:none;color:#cacaca;text-align:left;white-space:nowrap}.xmcomm_header .header_menu_list ul li:before{content:"";display:inline-block;width:6px;height:6px;margin-right:10px;margin-top:18px;background:#cacaca;border-radius:50%;vertical-align:top}.xmcomm_header .header_menu_list ul li a{color:#616161}.xmcomm_header .header_menu_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list{position:absolute;left:544px;width:182px;padding:35px 0;background:#fff;border:1px solid #e6e6e6;z-index:11;overflow:hidden}.xmcomm_header .header_more_list ul{margin:-6px 0 0 1px;width:182px}.xmcomm_header .header_more_list ul li{float:left;padding:0;margin:0 0 0 48px;width:133px;height:30px;line-height:30px;list-style-type:disc;border-right:1px solid #dfdfdf;color:#6d6d6d;font-size:14px;text-align:left}.xmcomm_header .header_more_list ul li a{color:#6d6d6d;line-height:30px}.xmcomm_header .header_more_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list ul li.hide{display:none}@media screen and (max-width:1500px){.xmcomm_header{width:990px}.xmcomm_header .logo,.xmcomm_header .mobile_qr{margin-left:0}.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}}@media \0screen\0{.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}.xmcomm_header .header_icon.header_revise{margin-top:16px}}
+</style> 
+   <div class="xmcomm_header_wrap"> 
+    <div class="xmcomm_header"> 
+     <a href="${base}/index.do" class="logo">328宿舍</a> 
+     <ul class="header_menu"> 
+      <li><a href="${base}/index.do">首页</a></li> 
+      <li><a href="${base}/User/index.do">个人中心</a></li> 
+      <li> <a href="${base}/Ask/questionList.do">问答中心</a> </li> 
+       <li> <a href="${base}/Ask/addQuestion.do">提问</a> </li> 
+      <li> <a href="${base}/Bbs/addPost.do">发帖</a> </li> 
+     </ul> 
+    </div> 
+   </div> 
+   
+      <div class="head_wrap"> 
+    <div class="header wrap_990"> 
+     <div class="user_wrap"> 
+	 
+      <div class="topbar-info J_userInfo " id="login"> 
+	<#if aopUserInfo??>
+	  <a class="loginbtn" href="${base}/User/index.do">你好：${aopUserInfo.userName}</a> 
+	 <#else>
+	  <a class="loginbtn" href="${base}/login.do">登录</a> 
+       <a href="${base}/register.do" class="registerbtn">注册</a> 
+  
+	 </#if>
+      
+	  </div>
+     </div> 
+    </div> 
+   </div> 
+<div class='container_wrap wrap_990 clearfix'>
+				<div class='plateinfor'>
+	<a href="${base}/Bbs/postList.do" class='platename'>动态</a>
+			这是一个神奇的地方
+	<a href="${base}/Ask/addQuestion.do" class='btn sendtheme'>+发表提问</a>
+</div>
+<div class='contain_left fr'>
+<#if question??>
+	<div class='left_wrap personLayer'>
+		<div class='con'>
+			<div class='personLayer_msg'>
+				<a href="${base}/User/Message/send.do?toUserId=${question.user.userId}" class='user_head'>
+					<img src="<#if question?? &&question.user.portrait_img??>${base}/res/upload/portrait/${question.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" class='user_pic' alt="${question.user.userName}">
+						
+					</a>
+				<div class='user_msg'>
+					<span><a href="${base}/User/Message/send.do?toUserId=${question.user.userId}" class='user_name'
+							 u-id="41959073">${question.user.userName}</a>
+							 								</span>
+					<p><span class='txt'>无头衔</span>
+						<i class='vipnum vipnum_2'></i>
+					</p>
+				</div>
+			</div>
+			<ol class='clearfix'>
+				<li>
+					<span class='txt'>${mark}
+					
+				</span>
+					<span class='txt'>积分</span>
+				</li>
+				<li class='integral'>
+					<span class='txt'>无</span>
+					<span class='txt'>经验</span>
+				</li>
+				<li>
+					<span class='txt'>无</span>
+					<span class='txt'>贡献值</span>
+				</li>
+			</ol>
+					
+						<a class='btn' href="${base}/User/Message/send.do?toUserId=${question.user.userId}" target="_blank" rel="noopener noreferrer">发消息</a>
+		<span class='btn btn-blue J_sendmsg'>测试</span>
+		</div>
+	</div>
+	</#if>				
+
+		
+</div>
+	<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+		</#if>	
+
+<#if question??>	
+<div class='contain_right clearfix fl'>
+		<div class='filtrate invitation' f-id='6' date-id='13853174' t-id="8">
+		<div class='invitation_con'>
+					
+			<h1 >
+				<span></span>
+				<span></span>
+				<span class='name'>${question.title}</span>
+							</h1>
+			<p class='txt'>
+				<span>发表在 </span>
+					<a href="" class="name">无</a>
+				<span class='time'>${question.create_time}</span>
+				<span class='f_r'><i class='msg'></i>无</span>
+				<span class='f_r'><i class='see'></i>无</span>
+																			</p>
+														<div class='invitation_content'>
+						<div id="contentAfterCheck">
+						${question.discribe}
+						</div>									
+									</div>
+								
+			</div>
+						
+	</div>
+			<div class='reply' id="comment_top">
+			<div class='reply_con'>
+	
+				<ul class='reply_list'>
+					
+								<!--回复列表  -->
+		<div  id="replys">
+		<#if answerTake??>
+		<li class="clearfix" post-id="442550234" id="1741" float-id="1741" u-id="8036169"><div class="reply_list_img"><a href="/pouruan/User/Message/send.do?toUserId=${answerTake.user.userId}" class="headportrait" target="_blank" rel="noopener noreferrer"><img class="user_head" data-original="<#if answerTake.user.portrait_img??>${base}/res/upload/portrait/${answerTake.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>?&amp;width=50&amp;height=50" src="<#if answerTake.user.portrait_img??>${base}/res/upload/portrait/${answerTake.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>"></a></div><div class="reply_list_con"><div class="auth_msg clearfix"><a href="/pouruan/User/Message/send.do?toUserId=${answerTake.user.userId}" class="auth_name" target="_blank" rel="noopener noreferrer">	${answerTake.user.userName}</a><span class="at"> 发表于</span><span class="time">	${answerTake.create_time}|
+		<font color='red'>已采纳</font></span></div>
+		<div class="reply_txt">
+	${answerTake.discribe}
+		</li>
+		</div>
+		</#if>
+		<#list anwser as anwserOne>
+		
+					
+		<li class="clearfix" post-id="442550234" id="1741" float-id="1741" u-id="8036169"><div class="reply_list_img"><a href="/pouruan/User/Message/send.do?toUserId=${anwserOne.user.userId}" class="headportrait" target="_blank" rel="noopener noreferrer"><img class="user_head" data-original="<#if anwserOne.user.portrait_img??>${base}/res/upload/portrait/${anwserOne.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>?&amp;width=50&amp;height=50" src="<#if anwserOne.user.portrait_img??>${base}/res/upload/portrait/${anwserOne.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>"></a></div><div class="reply_list_con"><div class="auth_msg clearfix"><a href="/pouruan/User/Message/send.do?toUserId=${anwserOne.user.userId}" class="auth_name" target="_blank" rel="noopener noreferrer">	${anwserOne.user.userName}</a><span class="at"> 发表于</span><span class="time">	${anwserOne.create_time}|
+		
+		<#if answerTake??>
+		
+		<#else>
+		<button id="shenhebuttun${anwserOne.id}" onclick="clickButton(${anwserOne.id},${question.id})">
+			 <font color='green'>采纳</font>
+		 </button>	  
+		</#if>
+		</span></div>
+		<div class="reply_txt">
+	${anwserOne.discribe}
+		</div>
+	
+	</li>
+		</#list>
+		</div>
+			</ul>
+			</div>
+			<div class="base_widget_paging">
+					<!--回复列表  end-->
+		<#if count gt 10>
+		  <!-- 导入自定义ftl -->  
+	    <#import "/freeMarkFtl/page.ftl" as cast/>  
+	    <!-- 使用该标签 -->  
+	    <@cast.pager pageNo=answerPageNo pageSize=10 toURL="./readQuestion.do" recordCount=count/>  
+		</#if>
+			</div>
+		</div>
+	
+	<div class='reply_area'>
+		<div class='reply_area_con clearfix'>
+		<!-- 记得不要混淆了后台的  model.addAttribute("RequestParameters",RequestParameters); 不能同时存在两个一样的名字-->
+				<div id="tishi-reply" <#if RequestParameters["errors"]??> class ="alert alert-danger"</#if>>
+					${RequestParameters["errors"]?default("")}
+				</div>
+			<form action="./addAnswer.do" method="POST" class="com-mail">
+				<hr>
+				<textarea rows="2" id="editor-trigger" name="discribe" placeholder="内容，5万字以内哦" maxlength="10000" class="form-control1 control2"></textarea>
+				<hr>
+				<input type="hidden" name="_csrf"  id="_csrf" value="${_csrf.token}">
+				<input type="hidden" name="pageNo"  id="replyPageNo" value="${answerPageNo}">
+				<input type="hidden" name="questionId"  id="questionId" value="${questionId}">
+				<div  class="header_stats"> <input type="submit" id="submit" value="回复"></div>
+		</form>	
+		</div>
+	</div>
+</#if>	
+		
+     <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/personLayer.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/slide.js"></script> 
+
+</div>
+			</div>
+			
+		</div>
+		<div class='footer brief'>
+	
+			<div class='wrap_990'>
+				<a href="#" class='link'>14328.com</a>
+				<span>京ICP证14328号 京ICP备14328号 <a target="_blank" rel="noopener noreferrer" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" style="cursor:pointer;color: white;">京公网安备11010802020134号</a></span>
+			</div>
+		</div>
+	</body>
+ </html>
+

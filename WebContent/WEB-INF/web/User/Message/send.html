@@ -1,0 +1,108 @@
+<#assign security=JspTaglibs["/WEB-INF/securityTlds/security.tld"] />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>发送消息</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="xiaoxi"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+	
+					
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+				<div class="col-md-8 inbox_right">
+							<div class="Compose-Message">               
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										发送站内消息
+									</div>
+									<div class="panel-body panel-body-com-m">
+												<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>		
+					
+										<form action="./send.do" method="POST" class="com-mail">
+											<hr>
+												
+												<label>用户ID</label>
+											<div class="form-group" id="reform-group-toUserId">
+												<input type="text" placeholder="用户id" maxlength="11" required=" " value="<#if toUserId??>${toUserId}</#if>" id="toUserId" name="toUserId" onkeyup="validate()" class="form-control1 control3">
+												</div>
+											
+												<label>内容 : </label>
+												<textarea rows="6"  required=" " name="content" placeholder="消息内容，250字以内哦" maxlength="255" class="form-control1 control2"></textarea>
+											<hr>
+											<input type="hidden" name="_csrf"  id="_csrf" value="${_csrf.token}">
+								
+											<input type="submit"  id="submit" value="Send Message">
+										</form>
+									</div>
+								 </div>
+							  </div>
+						</div>
+						<div class="clearfix"> </div>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+	<script type="text/javascript">
+
+              function validate() {
+             		var toUserId = document.getElementById("toUserId").value;
+                 	var  re = /^[0-9]*$/;
+				    if(re.test(toUserId)){
+				     	 document.getElementById("reform-group-toUserId").className+="form-group has-success";
+                     	// document.getElementById("tishi-toUserId").innerHTML="正确";
+                     	  document.getElementById("submit").disabled = false;
+                     	  return ;
+				    }else{
+				    	 document.getElementById("reform-group-toUserId").className+="form-group has-error";
+				    	// document.getElementById("tishi-toUserId").innerHTML="格式错误";
+				    	 document.getElementById("submit").disabled = true;
+				    	 return ;
+				    }
+					
+              }
+          </script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>
+

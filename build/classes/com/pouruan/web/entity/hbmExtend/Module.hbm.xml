@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity.extend">
+	<class name="Module" table="`module`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="java.lang.Integer" column="`module_id`"> <generator class="identity"/></id>
+	 	<property name="name" column="`module_name`" type="java.lang.String" not-null="true" length="30" />
+	 	<set name="posts"  inverse="true"  table="`post`" lazy="true">
+         	<key column="`module_id`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Post" />
+        </set>
+	</class>
+</hibernate-mapping>

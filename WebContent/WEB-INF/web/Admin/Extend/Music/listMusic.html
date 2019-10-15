@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>音乐管理</title>
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="music"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+
+			<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>	
+					<h3 class="blank1">音乐管理</h3>
+					<form action="./listMusic.do" method="POST">
+							<div class="input-group input-group-ind">
+								<input type="text" name="name" id="findVar" maxlength="11" class="form-control1 input-search" style="width:92%" placeholder="搜索">
+								<select >
+								<option onclick="changeName('name')">歌名</option>
+								<option onclick="changeName('player')">歌手</option>	
+								</select>
+								<input type="hidden" name="_csrf" value="${_csrf.token}">
+								<span class="input-group-btn">
+									<button class="btn btn-success" type="submit"><i class="fa fa-search icon-ser"></i></button>
+								</span>
+							</div><!-- Input Group -->
+							
+					</form>
+					
+					 <div class="xs tabls">
+					 <div class="bs-example4" data-example-id="contextual-table">
+					 	
+						<table class="table" style="table-layout:fixed;word-wrap:break-word;">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>歌名</th>
+							  <th>歌手</th>
+							  <th>专辑</th>
+							  <th>地址</th>
+							  <th>播放次数</th>
+							  <th>操作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						   <#list musicList as music>
+						   <tr<#if music_index%2==0> class="active"</#if>>
+						    <th scope="row">${music_index+1}</th>
+		           		 <td> ${music.name}</td>
+		            	 <td> ${music.player} </td>
+		            	  <td> <#if music.album??>${music.album}</#if> </td>
+		            	 <td> ${music.url} </td>
+		            	 <td> ${music.playCount} </td>
+		            	 <td> <a href="./editMusic.do?id=${music.id}">修改</a>|<a onclick="submitDelMusic('./delMusic.do?music=${music.id}')">删除</a>  </td>
+				</tr>
+         </#list>
+						  </tbody>
+						</table>
+						
+				
+					   </div>
+					 </div>
+ <form name="delMusic" method="post" action="">
+	<input type="hidden" name="_csrf" value="${_csrf.token}">
+</form>
+					     <!-- 导入自定义ftl -->  
+    <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./listMusic.do" recordCount=musicSize/>  
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+<script language="javascript">
+  function submitDelMusic(url){
+    var qForm=document.delMusic;
+    qForm.action=url;
+    qForm.submit();
+  }
+
+</script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+<script type="text/javascript">
+           function changeName(v) {
+        	  document.getElementById("findVar").name=v;
+           }
+ </script>
+</html>

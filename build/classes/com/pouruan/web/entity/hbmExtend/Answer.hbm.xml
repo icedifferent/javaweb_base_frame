@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity.extend">
+	<class name="Answer" table="`answer`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="java.lang.Integer" column="`Id`"> <generator class="identity"/></id>
+		<property name="create_time" column="`create_time`"  type="java.sql.Timestamp" not-null="true" />
+	 	<property name="discribe" column="`discribe`" type="java.lang.String" not-null="true" length="5000" />
+	 	<property name="is_token"  column="`is_token`"  type="java.lang.Integer" not-null="true"/>
+	 	
+	 	<many-to-one name="user"  column="`userId`"  />
+	 	<many-to-one name="question"  column="`questionId`"  />
+	</class>
+</hibernate-mapping>

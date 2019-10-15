@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>注册</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<link href="${base}/res/templet/css/getPhoneCodeCss/weui.min.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript">
+$(function(){
+    $('#send').click(function(){
+         $.ajax({
+             type: "POST",
+             url: "./getCode.do",
+             data: {phone:$("#phone").val(),_csrf:$("#_csrf").val()},
+             dataType: "json",
+             success: function(data){
+             			if(data.status!=1){
+             				alert(data.message);
+             			}
+             }
+         });
+    });
+});
+
+
+function clickButton(obj){
+    var obj = $(obj);
+    obj.attr("disabled","disabled").val("已经发送");/*按钮倒计时*/
+    var time = 90;
+    var set=setInterval(function(){
+    obj.val(--time+"(s)");
+    }, 1000);/*等待时间*/
+    setTimeout(function(){
+    obj.attr("disabled",false).val("重新获取验证码");/*倒计时*/
+    clearInterval(set);
+    }, 90000);
+}
+
+</script>
+<body>
+
+		<section>
+			<div id="page-wrapper" class="sign-in-wrapper">
+				<div class="graphs">
+					<div class="sign-up">
+						<h3>Register Here</h3>
+						<p class="creating">you are welcome</p>
+						
+						<h5>Personal Information</h5>
+								<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+					<form action="./register.do" method="post">
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>手机号码* :</h4>
+							</div>
+							<div class="sign-up2">
+							
+									<input type="text"  id="phone" name="phone" maxlength="11" placeholder="phone" required=" " onkeyup="validatePhone()"/>
+							<p class="help-block" id="tishi-phone"></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="sign-u">
+							<div class="sign-up3">
+						<input style="width:140px;" type="button" id="send" name="getCode" 
+				    class="weui_btn weui_btn weui_btn_mini weui_btn_primary" value="获取手机验证码"  onclick="clickButton(this)">
+				
+				 	</div>
+							<div class="clearfix"> </div>
+						</div>
+				    
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>手机验证码* :</h4>
+							</div>
+							<div class="sign-up2">
+					
+									<input type="text"  name="checkCode" maxlength="4" id="checkCode" placeholder="checkCode" required=" " onkeyup="validateCheckCode()"/>
+						<p class="help-block" id="tishi-checkCode"></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+		
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>密码* :</h4>
+							</div>
+							<div class="sign-up2">
+						
+									<input type="password" id="password" maxlength="32" name="password" placeholder="password" required=" "/>
+						
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>重新输入密码* :</h4>
+							</div>
+							<div class="sign-up2">
+						
+									<input type="password" id="repassword" placeholder="repassword" maxlength="32" required=" " onkeyup="validate()"/>
+											
+						<p class="help-block" id="tishi-password"></p>
+							</div>
+					<div class="clearfix"> </div>
+						
+						</div>
+							<#if needCaptcha??>
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>验证码* :</h4>
+							</div>
+							<div class="sign-up2">
+									<input type="text" name="captcha" id="captcha" placeholder="验证码" maxlength="4" required=" " onkeyup="validateCaptcha()"/>
+									<p class="help-block" id="tishi-captcha"></p>
+							</div>
+							<div class="sign-up3">
+								<img src="${base}/captcha.svl" height="40"  onclick="this.src='${base}/captcha.svl?d='+new Date()*1"/>    
+							</div>
+							 <div class="clearfix"> </div>
+						</div>
+						</#if>
+						<div class="sub_home">
+						<div class="sub_home_center">
+									<input type="submit" id="submit" value="Submit">
+							</div>
+							<div class="sub_home_right">
+								<p>Go Back to <a href="index.html">Home</a></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<input type="hidden" name="_csrf"  id="_csrf" value="${_csrf.token}">
+					</form>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+			function validateCheckCode(){
+				var  re = /^[A-Za-z0-9]+$/;
+				var checkCode = document.getElementById("checkCode").value;
+				if(re.test(checkCode)&&checkCode.length<5){
+					 document.getElementById("tishi-checkCode").innerHTML="";
+					  document.getElementById("submit").disabled = false;
+				}else{
+				     document.getElementById("tishi-checkCode").innerHTML="<font color='red'>格式错误</font>";
+				     document.getElementById("submit").disabled = true;
+				 }
+			}
+			
+			function validateCaptcha(){
+				var  re = /^[A-Za-z0-9]+$/;
+				var captcha = document.getElementById("captcha").value;
+				if(re.test(captcha)&&captcha.length<5){
+				 		 document.getElementById("tishi-captcha").innerHTML="";
+				 		 document.getElementById("submit").disabled = false;
+				  }else{
+				    	 document.getElementById("tishi-captcha").innerHTML="<font color='red'>格式错误</font>";
+				    	 document.getElementById("submit").disabled = true;
+				 }
+			}
+			
+			
+			function validatePhone(){
+				var phone = document.getElementById("phone").value;
+                 	var  re = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+				    if(re.test(phone)&&phone.length==11){
+				   		  document.getElementById("tishi-phone").innerHTML="";
+				   		  document.getElementById("submit").disabled = false;
+				 	 }else{
+				    	 document.getElementById("tishi-phone").innerHTML="<font color='red'>格式错误</font>";
+				    	 document.getElementById("submit").disabled = true;
+				    	 
+				    }
+			}
+			
+            function validate() {
+                  var pwd1 = document.getElementById("password").value;
+                  var pwd2 = document.getElementById("repassword").value;
+
+    			  if(pwd1.length<6||pwd1.length>32){
+    			      document.getElementById("tishi-password").innerHTML="<font color='red'>密码长度应为6-32位</font>";
+                      document.getElementById("submit").disabled = true;
+                      return ;
+    			  }
+                  if(pwd1 == pwd2) {
+                      document.getElementById("tishi-password").innerHTML="<font color='green'>两次密码相同</font>";
+                      document.getElementById("submit").disabled = false;
+                  }
+                  else {
+                      document.getElementById("tishi-password").innerHTML="<font color='red'>两次密码不相同</font>";
+                      document.getElementById("submit").disabled = true;
+                  }
+              }
+          </script>
+	<!--footer section start-->
+			<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

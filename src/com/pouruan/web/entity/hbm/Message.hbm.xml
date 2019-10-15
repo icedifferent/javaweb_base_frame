@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+	<class name="Message" table="`message`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="messageId" type="java.lang.Integer" column="`message_id`"> <generator class="identity"/></id>
+	 	<property name="content" column="`content`" type="java.lang.String" not-null="true"  length="1000"/>
+	<!--  	<property name="fromUserId" column="`from_user`" type="java.lang.Integer" not-null="true" />
+		<property name="toUserId" column="`to_user`"  type="java.lang.Integer" not-null="true" />
+	 -->	
+	 <property name="date" column="`date`"  type="java.sql.Timestamp" not-null="true" />
+ 		<property name="ifRead"  column="`if_read`"  type="java.lang.Byte" not-null="true"/>
+ 		<property name="type"  column="`type`"  type="java.lang.Byte" not-null="true"/>
+ 		<many-to-one name="fromUser"  column="`from_user`"  />
+ 		<many-to-one name="toUser"  column="`to_user`"  />
+	</class>
+</hibernate-mapping>

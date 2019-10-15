@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>版块管理</title>
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="luntanguanli"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+			<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>		
+					<h3 class="blank1">版块管理</h3>
+					 <div class="xs tabls">
+					 <div class="bs-example4" data-example-id="contextual-table">
+						<table class="table">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>ID</th>
+							  <th>版块名称</th>
+							  <th>操作</th>
+							  
+							</tr>
+						  </thead>
+						  <tbody>
+						   <#list list as module>
+						   <tr<#if module_index%2==0> class="active"</#if>>
+						    <th scope="row">${module_index+1}</th>
+            <td> ${module.id}</td>
+            	 <td> ${module.name} </td>
+
+          
+				<td><a  onclick="submitDelModule('./delModule.do?moduleId=${module.id}')">删除</a>|<a  href="./editModule.do?moduleId=${module.id}">修改</a></td>
+				</tr>
+         </#list>
+	<form name="delAction" method="post" action="">
+	<input type="hidden" name="_csrf" value="${_csrf.token}">
+</form>
+
+
+
+	
+						  </tbody>
+						</table>
+					   </div>
+					 </div>
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+<script language="javascript">
+
+  
+ function submitDelModule(url){
+    var qForm=document.delAction;
+    qForm.action=url;
+    qForm.submit();
+  }
+</script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

@@ -1,0 +1,181 @@
+.mibbs_con {
+	font-family: arial,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
+	background-color: #fff;
+	width: 249px;
+	height: 50px;
+	position: relative
+}
+
+.mibbs_con .mibbs_signpanel {
+	background-color: #ff6f3d;
+	height: 50px;
+	display: block;
+	position: relative;
+	background-image: url(http://img03.mifile.cn/webfile/images/hd/2013120901/tou.png?234);
+	background-repeat: no-repeat;
+	background-position: 14px 8px;
+	cursor: pointer
+}
+
+.mibbs_con .mibbs_signpanel .font {
+	position: absolute;
+	color: #fff;
+	width: 55px;
+	height: 30px;
+	font-size: 24px;
+	line-height: 30px;
+	top: 11px;
+	left: 54px
+}
+
+.mibbs_con .mibbs_signpanel .nums {
+	display: none
+}
+
+.mibbs_con .mibbs_signpanel .fblock {
+	height: 46px;
+	width: 111px;
+	background-color: #fff;
+	padding-left: 5px;
+	padding-right: 5px;
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	font-size: 14px;
+	color: #606060
+}
+
+.mibbs_con .mibbs_signpanel .fblock .all {
+	height: 23px;
+	line-height: 26px;
+	padding-left: 30px;
+	border-bottom: 1px solid #eee;
+	background-image: url(http://img03.mifile.cn/webfile/images/hd/2013120901/tou2.jpg?234);
+	background-repeat: no-repeat;
+	background-position: 5px 0;
+	margin-bottom: 0;
+	color: #606060
+}
+
+.mibbs_con .mibbs_signpanel .fblock .line {
+	height: 22px;
+	line-height: 24px;
+	padding-left: 30px;
+	width: 60px;
+	background-image: url(http://img03.mifile.cn/webfile/images/hd/2013120901/tou2.jpg?234);
+	background-repeat: no-repeat;
+	background-position: 5px -25px;
+	color: #606060
+}
+
+.mibbs_con a.mibbs_signpanel:hover {
+	background-color: #ff7d49
+}
+
+.mibbs_con a.mibbs_signpanel:active {
+	background-color: #f06332
+}
+
+.mibbs_con .default {
+	cursor: default;
+	background-color: #ff6f3d
+}
+
+.mibbs_con a.default:hover {
+	background-color: #ff6f3d
+}
+
+.mibbs_con a.default:active {
+	background-color: #ff6f3d
+}
+
+.mibbs_con .visted {
+	background-position: 7px 8px
+}
+
+.mibbs_con .visted .font {
+	font-size: 20px;
+	line-height: 25px;
+	width: 60px;
+	left: 46px;
+	top: 8px;
+	text-shadow: 0 1px 0 #ff4921
+}
+
+.mibbs_con .visted .nums {
+	display: block;
+	font-size: 12px;
+	width: 56px;
+	text-align: center;
+	line-height: 20px;
+	position: absolute;
+	color: #fff;
+	top: 29px;
+	left: 48px
+}
+
+.mibbs_con .mibbs_win {
+	display: none;
+	width: 208px;
+	height: 86px;
+	background-color: #fff;
+	border: 1px solid #e6e6e6;
+	position: absolute;
+	top: -126px;
+	left: 0;
+	z-index: 100;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	padding: 13px 20px
+}
+
+.mibbs_con .mibbs_win img {
+	width: 86px;
+	height: 86px;
+	float: left
+}
+
+.mibbs_con .mibbs_win div {
+	margin-left: 100px
+}
+
+.mibbs_con .mibbs_win h5 {
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	color: #303030;
+	margin-top: 24px;
+	font-weight: normal
+}
+
+.mibbs_con .mibbs_win span {
+	font-size: 12px;
+	color: #999;
+	display: block;
+	margin-top: 2px
+}
+
+.mibbs_con .mibbs_win .angleA {
+	width: 0;
+	_border: 0;
+	position: absolute;
+	bottom: -24px;
+	left: -68px;
+	border-color: rgba(0,0,0,0.1) transparent transparent;
+	border-style: solid;
+	border-width: 12px
+}
+
+.mibbs_con .mibbs_win .angleB {
+	width: 0;
+	_border: 0;
+	position: absolute;
+	bottom: -18px;
+	left: -65px;
+	border-color: #fff transparent transparent;
+	border-style: solid;
+	border-width: 10px
+}
+
+.mibbs_con a.mibbs_signpanel:visited,.mibbs_con a.visted:visited,.mibbs_con a.visted:hover,.mibbs_con a.visted:active {
+	background-color: #ff6f3d
+}

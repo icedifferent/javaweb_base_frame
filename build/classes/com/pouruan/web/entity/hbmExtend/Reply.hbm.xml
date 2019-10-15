@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity.extend">
+	<class name="Reply" table="`post_reply`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="java.lang.Integer" column="`reply_id`"> <generator class="identity"/></id>
+	 	<property name="content" column="`content`" type="java.lang.String" not-null="true" length="5000" />
+	 	<property name="date"  column="`date`"  type="java.sql.Timestamp" not-null="true"/>
+	 	<many-to-one name="replyUser"  column="`user_id`"  />
+	 	<many-to-one name="post"  column="`post_id`"  />
+	</class>
+</hibernate-mapping>

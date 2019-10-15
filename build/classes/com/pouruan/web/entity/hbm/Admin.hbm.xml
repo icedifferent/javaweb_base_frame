@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+	<class name="Admin" table="`admin`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<composite-id>
+			<key-many-to-one name="user"  column="`user_id`"  ></key-many-to-one>
+        </composite-id> 
+	 	<property name="isSuper" column="`is_super`" type="java.lang.Byte" not-null="true" length="1"/>
+		<property name="addDate" column="`add_date`"  type="java.sql.Timestamp" not-null="true" />
+ 		<!--<many-to-one name="user"  column="`user_id`" insert="false" update="false" />-->
+ 		<!-- set中inverse="true"，说明父子关系只在多的一端(Child)维护。所以只会发出2个insert语句。
+      		 注意：{many-to-one}总是设成“inverse=false”的，而且这个属性在Mapping中是不存在的！ -->
+		<set name="roles"  inverse="true" lazy="true"  >
+            <key column="`admin_id`" />
+            <one-to-many class="com.pouruan.web.entity.Role" />
+        </set>
+	</class>
+</hibernate-mapping>

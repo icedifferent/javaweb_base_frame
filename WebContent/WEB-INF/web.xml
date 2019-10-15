@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>pouruan</display-name>
+  <welcome-file-list>
+    <welcome-file>index</welcome-file>
+  </welcome-file-list>
+  <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/config/application-context.xml</param-value>
+  </context-param>
+    
+	<!-- 通过ContextLoaderListener自动装配ApplicationContext的配置信息，	 -->
+	<!-- ContextLoaderListener用于启动WebApplicationContext的Servlet和Web容器 -->
+	 <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    
+    <!-- set character encoding spring -->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- 解决hibernate load方法延迟带来的no session问题（就是session的生命周期放置到表现层） -->
+    <filter>  
+	    <filter-name>openSessionInView</filter-name>  
+	   	<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>  
+	</filter>  
+    <filter-mapping>  
+	   	<filter-name>openSessionInView</filter-name>  
+	    <url-pattern>/*</url-pattern>  
+	</filter-mapping> 
+
+    <servlet>
+        <servlet-name>web-app</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+       <init-param>
+           <param-name>contextConfigLocation</param-name>
+           <param-value>/WEB-INF/config/spring_mvc.xml</param-value>
+        </init-param>
+        <!-- 使系统在启动时装载servlet，而不是第一个servlet被访问时再被装载 -->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>web-app</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- 为了能够配置的默认首页生效  ，否则默认welcome报404，因为这是动态页面-->
+    <servlet-mapping>
+        <servlet-name>web-app</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+		<!-- 验证码 -->
+	  <servlet>
+	    <servlet-name>Jcaptcha</servlet-name>
+	    <servlet-class>com.pouruan.common.captcha.JcaptchaServlet</servlet-class>
+	  </servlet>
+	  <servlet-mapping>
+	    <servlet-name>Jcaptcha</servlet-name>
+	    <url-pattern>/captcha.svl</url-pattern>
+	  </servlet-mapping>
+	  
+	  
+
+
+
+ 
+	<!-- security session 监听器  监听sessionRegistry的内容变化和改动  -->
+	<listener>
+		<listener-class>
+			 org.springframework.security.web.session.HttpSessionEventPublisher
+		</listener-class>
+	</listener>
+	<!--spring security 过滤器-->
+      <filter>
+          <filter-name>springSecurityFilterChain</filter-name>
+          <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+      </filter>
+      <filter-mapping>
+          <filter-name>springSecurityFilterChain</filter-name>
+          <url-pattern>/*</url-pattern>
+      </filter-mapping>
+	
+    <!-- log4j配置 -->
+    <context-param>
+		<param-name>log4jConfiguration</param-name>
+		<param-value>/WEB-INF/config/log4j2.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+	 <!--静态资源,不被拦截器拦截-->
+     <servlet-mapping>
+          <servlet-name>default</servlet-name>
+          <url-pattern>*.css</url-pattern>
+           <url-pattern>*.zip</url-pattern>
+          <url-pattern>*.js</url-pattern>
+          <url-pattern>*.ttf</url-pattern>
+          <url-pattern>*.woff</url-pattern>
+          <url-pattern>*.ico</url-pattern>
+          <url-pattern>*.swf</url-pattern>
+          <url-pattern>*.gif</url-pattern>
+          <url-pattern>*.jpeg</url-pattern>
+          <url-pattern>*.bmp</url-pattern>
+          <url-pattern>*.psd</url-pattern>
+          <url-pattern>*.jpg</url-pattern>
+          <url-pattern>*.png</url-pattern>
+          <url-pattern>*.crx</url-pattern>
+          <url-pattern>*.xpi</url-pattern>
+          <url-pattern>*.exe</url-pattern>
+          <url-pattern>*.ipa</url-pattern>
+          <url-pattern>*.apk</url-pattern>
+          <url-pattern>*.mp3</url-pattern>
+          <url-pattern>*.htc</url-pattern>
+          <url-pattern>/WEB-INF/web/error/404.html</url-pattern>
+          <url-pattern>/WEB-INF/web/error/403.html</url-pattern>
+      </servlet-mapping>
+	 <error-page>
+   		 <error-code>404</error-code>
+   		 <location>/WEB-INF/web/error/404.html</location>
+  	</error-page>
+  	<error-page>
+   		 <error-code>403</error-code>
+   		 <location>/WEB-INF/web/error/403.html</location>
+  	</error-page>
+	<!-- 配置session过期时间120分钟 -->
+<!--     <session-config>  
+        <session-timeout>120</session-timeout>  
+    </session-config> -->
+</web-app>

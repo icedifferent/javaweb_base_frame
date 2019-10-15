@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+	<class name="CheckCode" table="`check_code`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="Id" type="java.lang.Integer" column="`Id`"><generator class="identity"/></id>
+		<property name="checkVar" column="`check_var`" type="java.lang.String" not-null="true" length="64"/>
+	 	<property name="checkCode" column="`check_code`" type="java.lang.String" not-null="true" length="10"/>
+		<property name="codeDate" column="`code_date`"  type="java.sql.Timestamp" not-null="true" />
+		<property name="status" column="`status`" type="byte" not-null="true" length="1"/>
+		
+	</class>
+</hibernate-mapping>

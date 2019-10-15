@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+	<class name="Config" table="`config`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="Id" type="java.lang.Integer" column="`Id`"><generator class="identity"/></id>
+		<property name="webTitle" column="`web_title`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="webDescription" column="`web_description`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="webKeyWord" column="`web_key_word`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="domain" column="`domain`" type="java.lang.String" not-null="true" length="255"/>
+		<!--暂时没用到  -->
+		<property name="authExpiryDate" column="`auth_expiry_date`"  type="java.lang.Integer" update="false" not-null="true" />
+		<property name="maxErrorTimes" column="`max_error_times`"  type="java.lang.Integer" not-null="true" />
+		<property name="maxSendEmailTimes" column="`max_send_email_times`"  type="java.lang.Integer" not-null="true" />
+		<property name="maxSendMesTimes" column="`max_send_mes_times`"  type="java.lang.Integer" not-null="true" />
+		<property name="emailHost" column="`email_host`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="emailUserName" column="`email_username`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="emailPwd" column="`email_pwd`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="emailTitle" column="`email_title`" type="java.lang.String" not-null="true" length="255"/>
+		<property name="emailPwdContent" column="`email_pwd_content`" type="java.lang.String" not-null="true" length="512"/>
+		<property name="emailActContent" column="`email_act_content`" type="java.lang.String" not-null="true" length="512"/>
+
+</class>
+</hibernate-mapping>

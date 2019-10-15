@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <body class="sign-in-up">
+    <section>
+			<div id="page-wrapper" class="sign-in-wrapper">
+				<div class="graphs">
+					<div class="sign-in-form">
+						<div class="sign-in-form-top">
+							<p><span>You Are Welcome</span> </p>
+						</div>
+						<div class="signin">
+
+					<#if RequestParameters["status"]??>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+					</div>
+				</#if>
+							<div class="signin-rit">
+								<span class="checkbox1">
+									 <label class="checkbox">Forgot Password ?</label>
+								</span>
+								<p><a href="User/FindPwd/findPwd.do">Click Here</a> </p>
+								<div class="clearfix"> </div>
+							</div>
+						<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+							<form action="loginDone.do" method="POST">
+							<div class="log-input">
+								<div class="log-input-left">
+								   <input type="text" class="user" value="Your Phone"  maxlength="11"  required=" "  name="username" id="phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Phone:';}"  onkeyup="validatePhone()"/>
+								<p class="help-block" id="tishi-phone"></p>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+							<div class="log-input">
+								<div class="log-input-left">
+								   <input type="password" class="lock" name="password" maxlength="32" required=" "   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Password:';}"/>
+								</div>
+
+								<div class="clearfix"> </div>
+							</div>
+								<#if needCaptcha??>
+								<div class="log-input">
+								<div class="log-input-left">
+							 <input type="text" placeholder="验证码" class="lock" autocomplete="off"  maxlength="4" required=" "  placeholder="验证码" name="captcha" class="form-control">
+					 </div>
+					<div class="log-input-right">
+					<img src="${base}/captcha.svl" height="40"  onclick="this.src='${base}/captcha.svl?d='+new Date()*1"/>      
+						 </div>
+							<div class="clearfix">
+							 </div>
+							</div>
+							 </#if>
+		<div class="log-input-right">
+			<input type="checkbox" id="rememberme"  checked="checked" name="remember-me" > Remember Me
+		</div>
+		<input type="hidden" name="_csrf" value="${_csrf.token}">
+								<input type="submit" value="登录">
+					</form>	 
+						</div>
+						<div class="new_people">
+							<h4>For New People</h4>
+							<p>you have no accout?</p>
+							<a href="register.do">Register Now!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+					<script type="text/javascript">
+					function validatePhone(){
+						var phone = document.getElementById("phone").value;
+		                 	var  re = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+						    if(re.test(phone)&&phone.length==11){
+						   		  document.getElementById("tishi-phone").innerHTML="";
+						   		  document.getElementById("submit").disabled = false;
+						 	 }else{
+						    	 document.getElementById("tishi-phone").innerHTML="<font color='red'>格式错误</font>";
+						    	 document.getElementById("submit").disabled = true;
+						    }
+					}
+					</script>
+		<!--footer section start-->
+			<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

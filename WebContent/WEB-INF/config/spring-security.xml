@@ -1,0 +1,133 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+    <!--放行静态资源  -->
+    <http pattern="/res/**" security="none"/>
+ 	<http auto-config="true">
+        <intercept-url pattern="/" access="permitAll" />
+        <intercept-url pattern="/Api/**" access="permitAll" />
+         <intercept-url pattern="/User/FindPwd/**" access="permitAll" />
+        <intercept-url pattern="/Admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/User/**" access="hasRole('ROLE_UNACTIVE') or hasRole('ROLE_CUSTOMUSER') or hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/Bbs/add*" access="hasRole('ROLE_CUSTOMUSER') or hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/Ask/add*" access="hasRole('ROLE_CUSTOMUSER') or hasRole('ROLE_ADMIN')" />
+       
+        <custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+        <!--   登录过滤(验证码)，不再经过form-login了 ，form-login在此没用，但是还是要写出来-->
+       	<custom-filter  before="FORM_LOGIN_FILTER" ref="loginFilter" /> 
+        <custom-filter  before="REMEMBER_ME_FILTER" ref="rememberMeFilter" />
+
+  		 <form-login  login-page="/login.do" 
+      				 login-processing-url="/loginDone.do"
+                     username-parameter="username" 
+                     password-parameter="password"  />
+
+         <csrf disabled="false"/>
+		 <remember-me key="pouruan" services-ref="rememberMeServices" />
+		  <!--此配置可实现获取所有登录用户信息 --> 
+		  <!-- session-fixation-protection="none"：防止伪造sessionid攻击，用户登录成功后会销毁用户当前的session，-->   
+		<session-management session-authentication-strategy-ref="sas" invalid-session-url="/login.do"/>
+		<logout logout-success-url="/login.do" logout-url="/logout.do" invalidate-session="true" delete-cookies="JSESSIONID"/>
+	 </http>
+    
+  
+    <!--由于auto-config可能无效，必须重写 rememberMeFilter过滤器 -->
+    <beans:bean id="rememberMeFilter" class=
+		"org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+		<beans:constructor-arg type="org.springframework.security.web.authentication.RememberMeServices" ref="rememberMeServices"/>
+		<beans:constructor-arg type="org.springframework.security.authentication.AuthenticationManager" ref="theAuthenticationManager" />
+	</beans:bean>
+    
+     <beans:bean id="rememberMeServices" class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+	 	<beans:property name="parameter" value="remember-me"></beans:property>
+	 	<beans:property name="tokenValiditySeconds" value="86400"></beans:property>
+	   <beans:constructor-arg type="java.lang.String" value="pouruan"/> 
+	    <beans:constructor-arg type="org.springframework.security.core.userdetails.UserDetailsService" ref="customUserDetailsService"/>  
+ 	 	<beans:constructor-arg>
+ 	  <beans:bean class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">  
+ 			  <beans:property name="dataSource" ref="dataSource"/>  
+ 			   <!--<property name="createTableOnStartup" value="true"/>--> <!-- 是否在系统启动时创建持久化token的数据库表 -->   
+		 </beans:bean> 
+ 	 	</beans:constructor-arg>
+ 	</beans:bean> 
+
+ 	<beans:bean id="remebmerMeAuthenticationProvider" class ="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+			  <beans:constructor-arg type="java.lang.String" value="pouruan"/>  
+	</beans:bean> 
+	<!--验证管理器-->  
+    <authentication-manager alias="authenticationManager"  id="theAuthenticationManager">
+        <authentication-provider user-service-ref="customUserDetailsService">
+       		 <password-encoder ref="passwordEncoder" />
+        </authentication-provider>
+        <!-- remember-me验证器 -->  
+         <authentication-provider ref="remebmerMeAuthenticationProvider"/>
+     </authentication-manager>
+    <!--自定义认证过滤器（加上验证码认证）  -->
+    <beans:bean id="loginFilter" class="com.pouruan.web.service.security.impl.SecuriyLoginFilter">
+        <beans:property name="authenticationManager"  ref="authenticationManager"></beans:property>
+        <beans:property name="authenticationSuccessHandler">
+            <beans:bean class="com.pouruan.web.service.security.impl.CustomSuccessHandler">            
+            </beans:bean>
+        </beans:property>
+         <beans:property name="authenticationFailureHandler">
+            <beans:bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+                <beans:property name="defaultFailureUrl" value="/login.do?status=error"></beans:property>
+            </beans:bean>
+        </beans:property>
+        <beans:property name="usernameParameter" value="username" />  
+        <beans:property name="passwordParameter" value="password" />  
+        <beans:property name="filterProcessesUrl" value="/loginDone.do" /> 
+        <beans:property name="rememberMeServices" ref="rememberMeServices"></beans:property>
+        <beans:property name="sessionAuthenticationStrategy" ref="sas" />
+     </beans:bean>
+	<!--  spring  session管理器 限制最大登录人数等处理-->
+	<beans:bean id="sas" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+		<beans:constructor-arg>
+		 <beans:list>
+			 <beans:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+				  <beans:constructor-arg ref="sessionRegistry"/>
+				  <beans:property name="maximumSessions" value="2" />
+				  <!-- <beans:property name="exceptionIfMaximumExceeded" value="true" /> -->
+				 </beans:bean>
+			 <beans:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy">
+			 </beans:bean>
+			 <beans:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+				  <beans:constructor-arg ref="sessionRegistry"/>
+			 </beans:bean>
+		 </beans:list>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<!-- 可获取所有的用户的session -->
+	<beans:bean id="sessionRegistry"
+	 class="org.springframework.security.core.session.SessionRegistryImpl" />
+	 <!-- session拦截器，当session在内存中过期之后，拦截不让他进行登录 ，必须重新登录-->
+ 	<!--  <beans:bean id="concurrencyFilter"  class="com.pouruan.web.service.security.impl.ConcurrentSessionFilter">
+        <beans:constructor-arg name="sessionRegistry"  ref="sessionRegistry" />
+        <beans:constructor-arg   name="expiredUrl"  value="/login.do" />
+        <beans:property name="logoutHandlers" >
+        	<beans:list>
+        		<beans:ref bean="rememberMeServices"/>
+        	</beans:list>
+        </beans:property>
+        <beans:property name="redirectStrategy" ref="defaultRedirectStrategy"></beans:property>
+    </beans:bean> -->
+    <!-- session拦截器，当session在内存中过期之后，删除授权信息，重新获取,无需重新登录 -->
+      <beans:bean id="concurrencyFilter"  class="org.springframework.security.web.session.ConcurrentSessionFilter">
+        <beans:constructor-arg name="sessionRegistry"  ref="sessionRegistry" />
+        <beans:constructor-arg   name="expiredUrl"  value="/User/index.do" />
+        <beans:property name="redirectStrategy" ref="defaultRedirectStrategy"></beans:property>
+    </beans:bean>
+		<beans:bean id="defaultRedirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"/>
+  
+   	<beans:bean id="passwordEncoder" class="com.pouruan.common.encode.Md5PwdEncoder"/>
+    <beans:bean id="customUserDetailsService" class="com.pouruan.web.service.security.impl.CustomUserDetailsService" />
+    <beans:bean id="customSuccessHandler"  class="com.pouruan.web.service.security.impl.CustomSuccessHandler" />
+
+
+
+</beans:beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	The status logger is used internally by log4j2 components. 
+	Setting status="debug" (or "trace") in the configuration will cause this 
+	internal logging to be output to the command line.
+	It will print debug information about which log4j2 plugin
+	 components are loaded (all configuration elements map to log4j2 plugins), 
+	 and more details like for example what appenders and loggers were found, 
+	 what parameters they have and how they are combined.
+	This is useful for troubleshooting configuration issues.
+  -->
+  <!--每天一个日志文件，每天更新，超过设定字节数后自动更名  -->
+    <Configuration status="warn">
+      <Appenders>
+         <!-- 按天备份 -->  
+        <RollingFile name="File" fileName="logs/new.log" filePattern="logs/log_%d{yyyy-MM-dd}_%i.log">  
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />  
+            <Policies>  
+                <!-- 更新时间 -->  
+                <TimeBasedTriggeringPolicy modulate="true" interval="24" />  
+                <SizeBasedTriggeringPolicy size="128KB" />  
+            </Policies>  
+            <!-- 最多8个日志 -->  
+            <DefaultRolloverStrategy max="8" />  
+        </RollingFile>  
+        <Console name="Console" target="SYSTEM_OUT">
+          <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+      </Appenders>
+      <Loggers>
+       <!-- 针对类有不同级别的调试级别
+	         	Once an event reaches a logger with its additivity 
+	         	set to false the event will not be passed to any of its parent loggers,
+	         	 regardless of their additivity setting. 
+		     <Logger name="com.pouruan.web.action.IndexAction" level="trace" additivity="false">  
+		            <AppenderRef ref="Console"/>  
+			 </Logger>  
+			 这里可以指定某一个类的调试级别，additivity=false可以去掉重复显示
+     	 -->
+   
+      	<Root level="trace"><!--默认为trace  -->
+          <AppenderRef ref="File" level="ERROR"/>
+          <AppenderRef ref="Console" level="DEBUG"/>
+        </Root>
+      </Loggers>
+    </Configuration>

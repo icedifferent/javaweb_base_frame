@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity.extend">
+	<class name="Mark" table="`mark`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="java.lang.Integer" column="`Id`"> <generator class="identity"/></id>
+	 	<property name="mark" column="`mark`" type="java.lang.Integer" not-null="true"  />
+		<property name="sign_time" column="`sign_time`"  type="java.sql.Timestamp" not-null="false" />
+		<many-to-one name="user"  column="`userId`"  />
+		
+		<!-- 此处可能有BUG 
+		<set name="user_id"  inverse="true"  table="`user`" lazy="true">
+         	<key column="`user_id`"/>
+            <one-to-many class="com.pouruan.web.entity.User" />
+        </set>-->
+        	
+	</class>
+</hibernate-mapping>

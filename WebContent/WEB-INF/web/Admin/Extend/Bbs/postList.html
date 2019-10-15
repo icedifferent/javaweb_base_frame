@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>论坛管理</title>
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="luntanguanli"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+
+			<div id="page-wrapper">
+				<div class="graphs">
+					<#if errors??>
+				 
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${errors}
+					</div>
+		
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>	
+					<h3 class="blank1">帖子</h3>
+					<form action="./postList.do" method="POST">
+							<div class="input-group input-group-ind">
+								<input type="text" name="title" id="findVar" maxlength="11" class="form-control1 input-search" style="width:92%" placeholder="搜索">
+								<select >
+								<option onclick="changeName('title')">标题</option>
+								<option onclick="changeName('userId')">用户ID</option>	
+								</select>
+								<input type="hidden" name="_csrf" value="${_csrf.token}">
+								<span class="input-group-btn">
+									<button class="btn btn-success" type="submit"><i class="fa fa-search icon-ser"></i></button>
+								</span>
+							</div><!-- Input Group -->
+							
+					</form>
+					
+					 <div class="xs tabls">
+					 <div class="bs-example4" data-example-id="contextual-table">
+					 	
+						<table class="table" style="table-layout:fixed;word-wrap:break-word;">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>用户ID</th>
+							  <th>用户名</th>
+							  <th>标题</th>
+							  <th>时间</th>
+							  <th>阅读量</th>
+							  <th>版块</th>
+							  <th>操作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						   <#list postList as post>	
+						   <tr<#if post_index%2==0> class="active"</#if>>
+						    <th scope="row">${post_index+1}</th>
+		           		 
+		            	 <td> ${post.user.userId} </td>
+		            	 <td> ${post.user.userName}</td>
+		            	 <td> ${post.title}</td>
+		            	 
+		            	 <td> ${post.addDate}</td>
+		            	 <td> ${post.readTimes}</td>
+		            	 <td> ${post.module.name}</td>
+		            	 <td><a onclick="submitDelPost('./delPost.do?postId=${post.id}')">删除</a>  </td>
+				</tr>
+         </#list>
+						  </tbody>
+						</table>
+						
+				
+					   </div>
+					 </div>
+ <form name="delPost" method="post" action="">
+	<input type="hidden" name="_csrf" value="${_csrf.token}">
+</form>
+					     <!-- 导入自定义ftl -->  
+    <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./postList.do" recordCount=postSize/>  
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+<script language="javascript">
+  function submitDelPost(url){
+    var qForm=document.delPost;
+    qForm.action=url;
+    qForm.submit();
+  }
+
+</script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+<script type="text/javascript">
+           function changeName(v) {
+        	  document.getElementById("findVar").name=v;
+           }
+ </script>
+</html>

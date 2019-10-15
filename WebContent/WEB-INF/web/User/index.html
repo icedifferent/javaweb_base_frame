@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户中心</title>
+<link href="${base}/res/templet/css/getPhoneCodeCss/weui.min.css" rel='stylesheet' type='text/css' />
+<#include "/commonTemplet/header.html"/>
+<script type="text/javascript">
+$(function(){
+    $('#send').click(function(){
+         $.ajax({
+             type: "POST",
+             url: "${base}/User/sendActEmailCode.do",
+             data: {email:"<#if userInfo.email??>${userInfo.email}</#if>",_csrf:$("#_csrf").val()},
+             dataType: "json",
+             success: function(data){
+             			if(data.status!=1){
+             				alert(data.message);
+             			}
+             }
+         });
+    });
+});
+
+
+function clickButton(obj){
+    var obj = $(obj);
+    obj.attr("disabled","disabled").val("已经发送");/*按钮倒计时*/
+    var time = 90;
+    var set=setInterval(function(){
+    obj.val(--time+"(s)");
+    }, 1000);/*等待时间*/
+    setTimeout(function(){
+    obj.attr("disabled",false).val("重新获取验证码");/*倒计时*/
+    clearInterval(set);
+    }, 90000);
+}
+</script>
+
+	<link href="${base}/res/templet/cropper/cropper.css" rel="stylesheet">
+	<link href="${base}/res/templet/cropper/sitelogo.css" rel="stylesheet">
+	<script src="${base}/res/templet/cropper/cropper.js"></script>
+	<script src="${base}/res/templet/cropper/sitelogo.js"></script>
+	<script type="text/javascript" src="${base}/res/templet/cropper/cropbox.js"></script>
+	<link rel="stylesheet" href="${base}/res/templet/cropper/style.css" type="text/css">
+</head>
+ <#assign leftside ="zhuye"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	
+	</div>
+	<!--body wrapper start-->
+		<!-- //header-ends -->
+			<div id="page-wrapper">
+				<div class="graphs">
+					<h3 class="blank1">个人信息</h3>
+
+					<div class="grid_3 grid_4">
+					  <h3>基本资料</h3>
+					  <div class="bs-example">
+						<table class="table">
+						  <tbody>
+					
+						  		<tr>
+						  		
+							  <td><h3 id="h3">头像：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+					
+							  <td class="type-info">
+						<div class="ibox-content">
+							<div class="row">
+								<div id="crop-avatar" class="col-md-6">
+								<div class="profile_img">	
+									<div class="avatar-view"  style="width:100px;height:100px;border-radius:100px"  title="" data-original-title="修改头像">
+								    	<img src="<#if userInfo.portrait_img??>${base}/res/upload/portrait/${userInfo.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" alt="哎呀，头像没了">
+								    </div>
+								</div>
+								</div>	
+							</div>
+						</div>
+							</td>
+							
+							
+							
+							
+						  </tr>
+						  <tr>
+							  <td><h3 id="h3">UID：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+							  <td class="type-info">${userInfo.userId}</td>
+						  </tr>
+						  <tr>
+							  <td><h3 id="h3">姓名：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+							  <td class="type-info">${userInfo.userName}</td>
+						</tr>
+						<tr>	
+							  <td><h3 id="h3">手机号码：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+							  <td class="type-info">${userInfo.phone}</td>
+						</tr>
+						<tr>
+							   <td><h3 id="h3">邮箱：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+							  <td class="type-info"><#if userInfo.email??>${userInfo.email}</#if>
+							  <#if userInfo.isCheckEmail==0><font color='red'>未验证</font>-
+							  	<input style="width:140px;" type="button" id="send" name="getCode" 
+				    class="weui_btn weui_btn weui_btn_mini weui_btn_primary" value="获取验证码进行验证"  onclick="clickButton(this)">
+				
+							  <#else><font color='green'>验证通过</font></#if>
+							  </td>
+						</tr>
+						<input type="hidden" name="_csrf"   id="_csrf" value="${_csrf.token}">
+						<tr>
+							  <td><h3 id="h3">签名：<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
+							  <td class="type-info"><#if userInfo.character??>${userInfo.character}</#if></td>
+						 </tr>
+						  </tbody>
+						</table>
+					  </div>	
+					 </div>	
+				</div>
+			
+			  </div>
+	<!--body wrapper end-->
+	</div>
+	<div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form class="avatar-form" action="./editPortrait.do?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data" method="post">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button">×</button>
+					<h4 class="modal-title" id="avatar-modal-label">修改头像啦</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="imageBox">
+							<div class="thumbBox"></div>
+							<div class="spinner" style="display: none">Loading...</div>
+						</div>
+						<div class="action">
+							<div class="new-contentarea tc">
+								<a href="javascript:void(0)" class="upload-img"> <label
+									for="upload-file">上传图像</label>
+								</a> <input type="file" class="" name="upload-file" id="upload-file" />
+							</div>
+							<input type="button" id="btnCrop" class="Btnsty_peyton" value="裁切">
+								<input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+">
+									<input type="button" id="btnZoomOut" class="Btnsty_peyton"
+									value="-">
+						</div>
+						<div class="cropped"></div>
+						<button class="btn btn-success btn-block avatar-save" onclick="clickButtonP()" type="submit"><i class="fa fa-save"></i> 保存修改</button>			
+					</div>
+				</div>
+  		</form>
+  	</div>
+  </div>
+</div>
+
+<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+<script type="text/javascript">
+$(window).load(function() {
+	var options =
+	{
+		thumbBox: '.thumbBox',
+		spinner: '.spinner',
+		imgSrc: 'http://www.wangmingjie.net/demo/web/jquery/avatar-cut/img/avatar.jpg'
+	}
+	var cropper = $('.imageBox').cropbox(options);
+	$('#upload-file').on('change', function(){
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			options.imgSrc = e.target.result;
+			cropper = $('.imageBox').cropbox(options);
+		}
+		reader.readAsDataURL(this.files[0]);
+		this.files = [];
+	})
+	$('#btnCrop').on('click', function(){
+		var img = cropper.getDataURL();
+		$('.cropped').html('');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" id="pic" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
+	})
+	$('#btnZoomIn').on('click', function(){
+		cropper.zoomIn();
+	})
+	$('#btnZoomOut').on('click', function(){
+		cropper.zoomOut();
+	})
+});
+
+//base64代码转成二进制文件
+function dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(',')[1]);
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], {type: mimeString});
+}
+//异步上传头像
+function clickButtonP(){
+	try {
+		var dataURL= document.getElementById("pic").src;
+	} catch(e) {alert("请点击剪裁");}
+		
+	var fd = new FormData();
+	var blob = dataURItoBlob(dataURL);
+	fd.append('avatar_file', blob);
+	$.ajax({
+	    type: 'POST',
+	    url: '${base}/User/editPortrait.do?${_csrf.parameterName}=${_csrf.token}',
+	    data: fd,
+	    processData: false, // 不会将 data 参数序列化字符串
+	    contentType: false, // 根据表单 input 提交的数据使用其默认的 contentType
+	    xhr: function() {
+	        var xhr = new window.XMLHttpRequest();
+	        xhr.upload.addEventListener("progress", function(evt) {
+	            if (evt.lengthComputable) {
+	                var percentComplete = evt.loaded / evt.total;
+	                console.log('进度', percentComplete);
+	            }
+	        }, false);
+	
+	        return xhr;
+	    }
+	}).success(function (res) {
+	res=eval('(' + res + ')');
+	alert(res.message);
+	    // 拿到提交的结果
+	}).error(function (err) {
+	    console.error(err);
+	});
+}
+</script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

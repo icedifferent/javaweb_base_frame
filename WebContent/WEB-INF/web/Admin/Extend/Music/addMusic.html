@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加音乐</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="music"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+	
+					
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+				<div class="col-md-8 inbox_right">
+							<div class="Compose-Message">               
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										添加音乐
+									</div>
+									<div class="panel-body panel-body-com-m">
+												<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>				
+										<form action="./addMusic.do?_csrf=${_csrf.token}" enctype="multipart/form-data" method="POST" class="com-mail">
+											<hr>
+												
+												<label>音乐名称</label>
+												<input type="text" placeholder="音乐名称" maxlength="30" required=" "  name="name" class="form-control1 control3">
+												<label>歌手</label>
+												<input type="text" placeholder="歌手" maxlength="20" required=" "  name="player" class="form-control1 control3">
+												<label>专辑</label>
+												<input type="text" placeholder="专辑" maxlength="30" required=" "  name="album" class="form-control1 control3">
+		
+											<label for="exampleInputFile">音乐文件</label>
+												<input type="file" name="music_file" id="exampleInputFile">
+												<p class="help-block">不能超过50M哦</p>
+									
+											<label for="exampleInputFile">音乐封面</label>
+												<input type="file"  name="cover_file"  id="exampleInputFile">
+												<p class="help-block">不能超过50M哦</p>
+											<hr>
+												<label>歌词 : </label>
+												<textarea rows="6"  required=" " name="lyric" placeholder="歌词，512字以内哦" maxlength="512" class="form-control1 control2"></textarea>
+											
+											<input type="submit" value="上传音乐">
+										</form>
+									</div>
+								 </div>
+							  </div>
+						</div>
+						<div class="clearfix"> </div>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>
+

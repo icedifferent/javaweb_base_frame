@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户中心</title>
+<link href="${base}/res/templet/css/getPhoneCodeCss/weui.min.css" rel='stylesheet' type='text/css' />
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="systemStatus"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	
+	</div>
+	<!--body wrapper start-->
+		<!-- //header-ends -->
+			<div id="page-wrapper">
+				<div class="graphs">
+				<h3 class="blank1">系统数据报表</h3>
+					<div class="col_3">
+						<div class="col-md-3 widget widget1">
+							<div class="r3_counter_box">
+								<i class="fa fa-user"></i>
+								<div class="stats">
+								<h5>${unActiveUserCount}</h5>
+								  <div class="grow">
+									<p>未审核用户</p>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 widget widget1">
+							<div class="r3_counter_box">
+								<i class="fa fa-users"></i>
+								<div class="stats">
+								  <h5>${activeUserCount}</h5>
+								  <div class="grow grow1">
+									<p>已审核用户</p>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 widget widget1">
+							<div class="r3_counter_box">
+								<i class="fa fa-envelope"></i>
+								<div class="stats">
+								 <h5>${messCount}</h5>
+								  <div class="grow grow3">
+									<p>消息数量</p>
+								  </div>
+								</div>
+							</div>
+						 </div>
+						 <div class="col-md-3 widget">
+							<div class="r3_counter_box">
+								<i class="fa fa-bell"></i>
+								<div class="stats">
+								   <h5>${atMessCount}</h5>
+								  <div class="grow grow2">
+									<p>@消息数量</p>
+								  </div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+			
+			  </div>
+	<!--body wrapper end-->
+	</div>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

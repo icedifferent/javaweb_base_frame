@@ -1,0 +1,125 @@
+
+			<!--notification menu start -->
+			<div class="menu-right">
+				<div class="user-panel-top">  	
+					<div class="profile_details_left">
+						<ul class="nofitications-dropdown">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge"><#if aopUnReadMessageCount??>${aopUnReadMessageCount}</#if></span></a>
+									
+										<ul class="dropdown-menu">
+											<li>
+												<div class="notification_header">
+													<h3>You have <#if aopUnReadMessageCount??>${aopUnReadMessageCount}</#if> new messages</h3>
+												</div>
+											</li>
+											 <#if aopMessageList??>
+											<#list aopMessageList as message>
+											<li <#if message_index%2==0> class="odd"</#if>><a href="${base}/User/Message/readMessage.do?messageId=${message.messageId}">
+											   <div class="user_img"><img src="<#if message.fromUser.portrait_img??>${base}/res/upload/portrait/${message.fromUser.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" alt="头像没啦"></div>
+											   <div class="notification_desc">
+												<p style="width:60px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+												${message.content}
+												</p>
+												<p><span>${message.date}</span>
+												 <#if message.ifRead==0><font color='red'>未读</font><#else><font color='green'>已读</font></#if>
+												</p>
+												</div>
+											   <div class="clearfix"></div>	
+											 </a></li>
+											 </#list>
+									 </#if>
+											<li>
+												<div class="notification_bottom">
+													<a href="${base}/User/Message/listMessage.do">See all messages</a>
+												</div> 
+											</li>
+										</ul>
+							</li>
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue"><#if aopUnAtReadMessageCount??>${aopUnAtReadMessageCount}</#if> </span></a>
+									<ul class="dropdown-menu">
+										<li>
+												<div class="notification_header">
+													<h3>You have <#if aopUnAtReadMessageCount??>${aopUnAtReadMessageCount}</#if> new messages</h3>
+												</div>
+											</li>
+											 <#if aopAtMessageList??>
+											<#list aopAtMessageList as message>
+											<li <#if message_index%2==0> class="odd"</#if>><a href="${base}/User/Message/readMessage.do?messageId=${message.messageId}">
+											   <div class="user_img"><img src="<#if message.fromUser.portrait_img??>${base}/res/upload/portrait/${message.fromUser.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" alt="头像没啦"></div>
+											   <div class="notification_desc">
+												<p style="width:60px;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+												${message.content}
+												</p>
+												<p><span>${message.date}</span>
+												 <#if message.ifRead==0><font color='red'>未读</font><#else><font color='green'>已读</font></#if>
+												</p>
+												</div>
+											   <div class="clearfix"></div>	
+											 </a></li>
+											 </#list>
+											</#if>
+											<li>
+												<div class="notification_bottom">
+													<a href="${base}/User/Message/listMessage.do">See all messages</a>
+												</div> 
+											</li>
+									</ul>
+							</li>	
+							  							   		
+							<div class="clearfix"></div>	
+						</ul>
+					</div>
+					<div class="profile_details">		
+						<ul>
+							<li class="dropdown profile_details_drop">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<div class="profile_img">	
+										<#if aopUserInfo??>
+										<span style="background:url(<#if aopUserInfo.portrait_img??>${base}/res/upload/portrait/${aopUserInfo.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>) no-repeat center"> </span> 
+										</#if>
+										 <div class="user-name">
+											<p><#if aopUserInfo??>UID:${aopUserInfo.userId}</#if><span><#if aopUserInfo??>${aopUserInfo.userName}</#if></span></p>
+										 </div>
+										 
+										 <i class="lnr lnr-chevron-down"></i>
+										 <i class="lnr lnr-chevron-up"></i>
+										<div class="clearfix"></div>	
+									</div>	
+								</a>
+								<ul class="dropdown-menu drp-mnu">
+									<li> <a href="${base}/User/editInfo.do"><i class="fa fa-cog"></i>设置</a> </li> 
+									<li> <a href="${base}/User/index.do"><i class="fa fa-user"></i>简介</a> </li> 
+									<li> <a onclick="submitLogout('${base}/logout.do')"><i class="fa fa-sign-out"></i>退出登录</a> </li>
+								</ul>
+							</li>
+							<div class="clearfix"> </div>
+						</ul>
+					</div>		
+					<div class="social_icons">
+						<div class="col-md-4 social_icons-left">
+										</div>
+						<div class="col-md-4 social_icons-left pinterest">
+									</div>
+						<div class="col-md-4 social_icons-left twi">
+								</div>
+						<div class="clearfix"> </div>
+					</div>				             	
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<!--notification menu end -->
+<form name="logout" method="post" action="">
+	<input type="hidden" name="_csrf" value="${_csrf.token}">
+</form>
+			
+<script language="javascript">
+  function submitLogout(url){
+    var qForm=document.logout;
+    qForm.action=url;
+    qForm.submit();
+  }
+
+</script>

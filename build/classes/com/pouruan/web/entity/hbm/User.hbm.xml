@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity">
+<!--视图无法同时插入两个表的数据 ，哎呀  -->
+	<class name="User" table="`user`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="userId" type="java.lang.Integer" column="`user_id`"><generator class="identity"/></id>
+		<property name="userName" column="`name`" type="string" not-null="true" length="100"/>
+		<property name="userPwd" column="`password`" type="string" not-null="true" length="64"/>
+		<property name="email" column="`email`" type="string" not-null="false" length="100"/>
+		<property name="isCheckEmail" column="`is_check_email`" type="java.lang.Byte" not-null="false" length="1"/>
+		<property name="emailActCode" column="`email_act_code`" type="string" not-null="false" length="256"/>
+		<property name="phone" column="`phone`" type="string" not-null="true" length="11"/>
+		<property name="register_ip" column="`register_ip`" type="string" not-null="true" length="64"/>
+		<property name="portrait_img" column="`portrait_img`" type="string" not-null="false" length="300"/>
+		<property name="status" column="`status`" type="java.lang.Byte" not-null="true" length="1"/>
+		<property name="character" column="`character`" type="string" not-null="false" length="300"/>
+		<property name="register_date" column="`register_date`" type="java.sql.Timestamp" not-null="true" />
+  		 <set name="admins"  inverse="true"  table="`admin`" lazy="true">
+            <key column="`user_id`"/>
+            <one-to-many class="com.pouruan.web.entity.Admin" />
+        </set>
+        <set name="messageSended"  inverse="true"  table="`message`" lazy="true">
+            <key column="`from_user`"/>
+            <one-to-many class="com.pouruan.web.entity.Message" />
+        </set>
+        <set name="messageReceived"  inverse="true"  table="`message`" lazy="true">
+            <key column="`to_user`"/>
+            <one-to-many class="com.pouruan.web.entity.Message" />
+        </set>
+       <set name="logs"  inverse="true"  table="`admin_log`" lazy="true">
+            <key column="`user_id`"/>
+            <one-to-many class="com.pouruan.web.entity.Log" />
+        </set>
+        
+        
+        
+        
+        
+        
+        <!--extends1  -->
+        <set name="posts"  inverse="true"  table="`post`" lazy="true">
+            <key column="`user_id`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Post" />
+        </set>
+         <set name="replys"  inverse="true"  table="`post_reply`" lazy="true">
+            <key column="`user_id`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Reply" />
+        </set>
+        
+        <!-- extends2 -->
+        <set name="marks"  inverse="true"  table="`mark`" lazy="true">
+            <key column="`userId`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Mark" />
+        </set>
+        
+        <set name="questions"  inverse="true"  table="`question`" lazy="true">
+            <key column="`userId`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Question" />
+        </set>
+        
+        <set name="answers"  inverse="true"  table="`answer`" lazy="true">
+            <key column="`userId`"/>
+            <one-to-many class="com.pouruan.web.entity.extend.Answer" />
+        </set>
+        
+        
+
+     <!--    
+     	 <property name="lastReplyPostTime" column="last_reply_post_time" type="java.sql.Timestamp" not-null="true" />
+  		 <property name="lastAddPostTime" column="last_add_post_time" type="java.sql.Timestamp" not-null="true" />
+  		 <property name="lastSendMessageTime" column="last_send_message_time" type="java.sql.Timestamp" not-null="true" />
+  	-->
+	</class>
+</hibernate-mapping>

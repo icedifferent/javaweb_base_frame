@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xml:lang="zh-CN">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width"/>
+						
+		<title id="titleha">查看帖子</title>
+		<!--xss过滤模块  -->
+	<script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/xss.js"></script>
+  	<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/wangEditer/css/wangEditor.min.css">
+    <link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/forum.css" type='text/css' />
+   <link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/style.css" type='text/css' />  
+ 	<link rel="stylesheet" type="text/css" href='${base}/res/templet/extend/index/statics/css/zh-cn/invitation.css?v=1498808901'>
+	<link rel="stylesheet" type="text/css" href='${base}/res/templet/extend/index/statics/css/zh-cn/datePicker.css?v=1496318116'>
+	  <!-- Bootstrap Core CSS -->
+	<link href="${base}/res/templet/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+	 
+ 
+ <!-- Custom CSS -->
+<link href="${base}/res/templet/css/style.css" rel='stylesheet' type='text/css' />
+    <style type="text/css">
+        #editor-trigger {
+            height: 200px;
+            /*max-height: 500px;*/
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+    <script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/lib/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/wangEditor.js"></script>
+	<link rel="stylesheet" type="text/css" href='http://s1.bbs.xiaomi.cn/statics/css/zh-cn/invitation.css?v=1498808883'>
+	<link rel="stylesheet" type="text/css" href='http://s1.bbs.xiaomi.cn/statics/css/zh-cn/datePicker.css?v=1496318116'>
+	<script src="${base}/res/templet/js/Chart.js"></script>
+  <link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/index/statics/css/zh-cn/index.css?v=1496318117" /> 
+   <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lang/zh-cn.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/base.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/lib/jquery.lazyload.js"></script> 
+
+	</head>
+	<body>
+		<script>switchMobile.init()</script>
+
+		<div class="main">
+   <style>
+    .xmcomm_header_wrap{position:relative;height:50px;min-width:990px;background:#5b5a5a;background:rgba(0,0,0,0.67);-webkit-font-smoothing:antialiased}.xmcomm_header{position:relative;height:50px;margin:0 auto}.xmcomm_header .logo{width:150px;height:50px;margin-left:5px;text-indent:-99999px;display:inline-block;position:absolute;left:0;background:url("${base}/res/templet/extend/index/statics/images/logo_cn.png") 0 center no-repeat}.xmcomm_header .mobile_qr{position:absolute;left:162px;top:0;width:70px;margin-left:5px;font-size:14px;z-index:100}.xmcomm_header .mobile_qr .mobile{display:block;line-height:50px;padding-left:14px;background:url("${base}/res/templet/extend/index/statics/images/header_mobile.png") 0 center no-repeat;color:#ff7e3e}.xmcomm_header .mobile_qr .qr{display:none;width:151px;padding:16px 16px 10px;border:1px solid #e6e6e6;background:#fff}.xmcomm_header .mobile_qr .qr span{display:block;height:151px;background:url("${base}/res/templet/extend/index/statics/images/header_qr.png") center no-repeat}.xmcomm_header .mobile_qr .qr strong{display:block;line-height:24px;color:#454545;text-align:center}.xmcomm_header .mobile_qr:hover .qr{display:block}.xmcomm_header .header_icon{width:16px;vertical-align:middle;text-indent:-9999px;display:inline-block;background:url("${base}/res/templet/extend/index/statics/images/header_icon.png") no-repeat}.xmcomm_header .header_icon.header_revise{height:16px;margin-top:-3px;background-position:0 -13px}.xmcomm_header .header_icon.header_search{height:16px;margin-right:5px;background-position:0 -31px}.xmcomm_header .header_menu{position:absolute;left:50%;line-height:50px;margin:0 0 0 -243px;z-index:100}.xmcomm_header .header_menu li{float:left;padding:0 8px;color:#fff;font-size:16px;z-index:20}.xmcomm_header .header_menu li:last-child{padding:0}.xmcomm_header .header_menu li:last-child:after{content:".";width:0;opacity:0}.xmcomm_header .header_menu li a,.xmcomm_header .header_menu li span{color:#fff;cursor:pointer}.xmcomm_header .header_menu li a:hover,.xmcomm_header .header_menu li span:hover{color:#ff8b3d}.xmcomm_header .header_menu li span{*float:left;*padding-right:20px}.xmcomm_header .header_menu li span i{width:10px;height:10px;background-position:0 -49px;display:inline-block;margin:6px 0 0 5px}.xmcomm_header .header_menu li .header_menu_list,.xmcomm_header .header_menu li .header_more_list{top:-100px;height:0;max-height:0;opacity:0;z-index:-1}.xmcomm_header .header_menu li:hover .header_menu_list,.xmcomm_header .header_menu li:hover .header_more_list{top:50px;height:auto;max-height:none;opacity:1}.xmcomm_header .header_menu_list{position:absolute;left:-164px;width:990px;padding:15px 0;border:1px solid #e6e6e6;background:#fff;z-index:11;overflow:hidden}.xmcomm_header .header_menu_list dl{line-height:42px}.xmcomm_header .header_menu_list dl dt{float:left;width:140px;color:#ff6700;text-align:right}.xmcomm_header .header_menu_list dl dd{margin-left:150px;border-bottom:1px solid #eee}.xmcomm_header .header_menu_list dl:last-child dd{border-bottom:none}.xmcomm_header .header_menu_list ul{overflow:auto}.xmcomm_header .header_menu_list ul li{float:left;padding:0;width:155px;list-style:none;color:#cacaca;text-align:left;white-space:nowrap}.xmcomm_header .header_menu_list ul li:before{content:"";display:inline-block;width:6px;height:6px;margin-right:10px;margin-top:18px;background:#cacaca;border-radius:50%;vertical-align:top}.xmcomm_header .header_menu_list ul li a{color:#616161}.xmcomm_header .header_menu_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list{position:absolute;left:544px;width:182px;padding:35px 0;background:#fff;border:1px solid #e6e6e6;z-index:11;overflow:hidden}.xmcomm_header .header_more_list ul{margin:-6px 0 0 1px;width:182px}.xmcomm_header .header_more_list ul li{float:left;padding:0;margin:0 0 0 48px;width:133px;height:30px;line-height:30px;list-style-type:disc;border-right:1px solid #dfdfdf;color:#6d6d6d;font-size:14px;text-align:left}.xmcomm_header .header_more_list ul li a{color:#6d6d6d;line-height:30px}.xmcomm_header .header_more_list ul li a:hover{color:#ff7519}.xmcomm_header .header_more_list ul li.hide{display:none}@media screen and (max-width:1500px){.xmcomm_header{width:990px}.xmcomm_header .logo,.xmcomm_header .mobile_qr{margin-left:0}.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}}@media \0screen\0{.xmcomm_header .header_menu{left:-10px;margin:0 0 0 250px}.xmcomm_header .header_menu .hidden{display:none}.xmcomm_header .header_menu_list{left:-240px}.xmcomm_header .header_more_list{width:364px;left:384px}.xmcomm_header .header_more_list ul{width:364px}.xmcomm_header .header_more_list ul li.hide{display:list-item}.xmcomm_header .header_icon.header_revise{margin-top:16px}}
+</style> 
+   <div class="xmcomm_header_wrap"> 
+    <div class="xmcomm_header"> 
+     <a href="${base}/index.do" class="logo">328宿舍</a> 
+     <ul class="header_menu"> 
+      <li><a href="${base}/index.do">首页</a></li> 
+      <li><a href="${base}/User/index.do">个人中心</a></li> 
+      <li> <a href="${base}/Ask/questionList.do">问答中心</a> </li> 
+       <li> <a href="${base}/Ask/addQuestion.do">提问</a> </li> 
+      <li> <a href="${base}/Bbs/addPost.do">发帖</a> </li> 
+     </ul> 
+    </div> 
+   </div> 
+   
+      <div class="head_wrap"> 
+    <div class="header wrap_990"> 
+     <div class="user_wrap"> 
+	 
+      <div class="topbar-info J_userInfo " id="login"> 
+	<#if aopUserInfo??>
+	  <a class="loginbtn" href="${base}/User/index.do">你好：${aopUserInfo.userName}</a> 
+	 <#else>
+	  <a class="loginbtn" href="${base}/login.do">登录</a> 
+       <a href="${base}/register.do" class="registerbtn">注册</a> 
+  
+	 </#if>
+      
+	  </div>
+     </div> 
+    </div> 
+   </div> 
+<div class='container_wrap wrap_990 clearfix'>
+				<div class='plateinfor'>
+	<a href="${base}/Bbs/postList.do" class='platename'>动态</a>
+			这是一个神奇的地方
+	<a href="${base}/Bbs/addPost.do" class='btn sendtheme'>+发表新主题</a>
+</div>
+<div class='contain_left fr'>
+<#if post??>
+	<div class='left_wrap personLayer'>
+		<div class='con'>
+			<div class='personLayer_msg'>
+				<a href="${base}/User/Message/send.do?toUserId=${post.user.userId}" class='user_head'>
+					<img src="<#if post?? &&post.user.portrait_img??>${base}/res/upload/portrait/${post.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" class='user_pic' alt="${post.user.userName}">
+						
+					</a>
+				<div class='user_msg'>
+					<span><a href="${base}/User/Message/send.do?toUserId=${post.user.userId}" class='user_name'
+							 u-id="41959073">${post.user.userName}</a>
+							 								</span>
+					<p><span class='txt'>无头衔</span>
+						<i class='vipnum vipnum_2'></i>
+					</p>
+				</div>
+			</div>
+			<ol class='clearfix'>
+				<li>
+					<span class='txt'>无
+					
+				</span>
+					<span class='txt'>积分</span>
+				</li>
+				<li class='integral'>
+					<span class='txt'>无</span>
+					<span class='txt'>经验</span>
+				</li>
+				<li>
+					<span class='txt'>无</span>
+					<span class='txt'>贡献值</span>
+				</li>
+			</ol>
+					
+						<a class='btn' href="${base}/User/Message/send.do?toUserId=${post.user.userId}" target="_blank" rel="noopener noreferrer">发消息</a>
+		<span class='btn btn-blue J_sendmsg'>测试</span>
+		</div>
+	</div>
+	</#if>				
+
+		
+</div>
+	<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+		</#if>	
+
+<#if post??>	
+<div class='contain_right clearfix fl'>
+		<div class='filtrate invitation' f-id='6' date-id='13853174' t-id="8">
+		<div class='invitation_con'>
+					
+			<h1 >
+				<span></span>
+				<span></span>
+				<span class='name'><div id="J_post_title"></div></span>
+							</h1>
+			<p class='txt'>
+				<span>发表在 </span>
+					<a href="./postList.do?moduleId=${post.module.id}" class="name">${post.module.name}</a>
+				<span class='time'>${post.addDate}</span>
+				<span class='f_r'><i class='msg'></i>${post.replyCount}</span>
+				<span class='f_r'><i class='see'></i>${post.readTimes}</span>
+																			</p>
+														<div class='invitation_content'>
+						<div id="contentAfterCheck"></div>									
+									</div>
+								
+			</div>
+						
+	</div>
+			<div class='reply' id="comment_top">
+			<div class='reply_con'>
+	
+				<ul class='reply_list'>
+					
+								<!--回复列表  -->
+		<div  id="replys">
+		</div>
+			</ul>
+			</div>
+			<div class="base_widget_paging">
+					<!--回复列表  end-->
+		<#if count gt 10>
+		  <!-- 导入自定义ftl -->  
+	    <#import "/freeMarkFtl/page.ftl" as cast/>  
+	    <!-- 使用该标签 -->  
+	    <@cast.pager pageNo=replyPageNo pageSize=10 toURL="./readPost.do" recordCount=count/>  
+		</#if>
+			</div>
+		</div>
+	
+	<div class='reply_area'>
+		<div class='reply_area_con clearfix'>
+		<!-- 记得不要混淆了后台的  model.addAttribute("RequestParameters",RequestParameters); 不能同时存在两个一样的名字-->
+				<div id="tishi-reply" <#if RequestParameters["errors"]??> class ="alert alert-danger"</#if>>
+					${RequestParameters["errors"]?default("")}
+				</div>
+			<form action="./addReply.do" method="POST" class="com-mail">
+				<hr>
+				<textarea rows="2" id="editor-trigger" name="content" placeholder="内容，5万字以内哦" maxlength="10000" class="form-control1 control2"></textarea>
+				<hr>
+				<input type="hidden" name="_csrf"  id="_csrf" value="${_csrf.token}">
+				<input type="hidden" name="pageNo"  id="replyPageNo" value="${replyPageNo}">
+				<input type="hidden" name="postId"  id="postId" value="${postId}">
+				<div  class="header_stats"> <input type="submit" id="submit" value="回复"></div>
+		</form>	
+		</div>
+	</div>
+</#if>	
+		<script type="text/javascript">
+	 <#if post??>
+	 var post;		
+	function getPost(){
+		         $.ajax({
+		             type: "POST",
+		             url: "${base}/Bbs/getPost.do",
+		             data: {postId:${post.id},_csrf:$("#_csrf").val()},
+		             dataType: "json",
+		             success: function(data){
+		             //alert(data.post.title);
+		             data=data.post;
+		             			if(data.status!=0){
+									
+					var title = data.title;
+                 	title = filterXSS(title, {
+						  whiteList:          [],        // 白名单为空，表示过滤所有标签
+						  stripIgnoreTag:     true,      // 过滤所有非白名单标签的HTML
+						  stripIgnoreTagBody: ['script'] // script标签较特殊，需要过滤标签中间的内容
+					});
+					document.getElementById("J_post_title").innerHTML=title;
+					
+					document.getElementById("titleha").innerHTML=title;
+					
+					//内容
+					var content =data.content;
+					
+                 	content = filterXSS(content, {
+						 whiteList: {
+   							 a: ['href', 'title', 'target','style','face'],
+   							 p: ['style','face'],
+   							 span: ['style','face'],
+   							 td: ['style','face'],
+   							 tr: ['style','face'],
+   							 pre: ['style','face'],
+   							 code: ['class'],
+   							 img: ['src','alt','style','class'],
+   							 br: [],
+   							 iframe: ['height','width','src','frameborder' ,'allowfullscreen']
+ 						 },		 
+ 						 stripIgnoreTag:     true,      // 过滤所有非白名单标签的HTML
+						 stripIgnoreTagBody: ['script'] // script标签较特殊，需要过滤标签中间的内容
+					});
+					//alert(content);
+					document.getElementById("contentAfterCheck").innerHTML=content;
+     
+		             			} else{
+		             				alert("帖子不存在");
+		             			}
+		             }
+		         });
+		}
+		getPost();
+		function getReply(){
+		         $.ajax({
+		             type: "POST",
+		             url: "/pouruan/Bbs/getReply.do",
+		             data: {postId:${postId},pageNo:$("#replyPageNo").val(),_csrf:$("#_csrf").val()},
+		             dataType: "json",
+		             success: function(data){
+		             var reply="";
+		             var i=1;
+		             var length=${count};
+		             var currentPage=${replyPageNo}-1;
+		             for(var o in data){  
+				         for(var j in data[o]){  
+				         //	alert(data[o][j]['replyUser'].userName);
+				         	var userName=data[o][j]['replyUser'].userName;
+				         	var userId=data[o][j]['replyUser'].userId;
+				         	var portrait_img=data[o][j]['replyUser'].portrait_img;
+				         	if(portrait_img==''){
+				         		portrait_img='/pouruan/res/templet/cropper/logo.jpg';
+				         	}else{
+				        	 	portrait_img='/pouruan/res/upload/portrait/'+portrait_img;
+				         	}
+				         	var date=data[o][j].date;
+				         	var content=data[o][j].content;
+				         	
+				         	var id=data[o][j].id;
+				         	if(currentPage*10+i==length){
+				         		foorName="沙发";
+				         	}else  if(currentPage*10+i==length-1){
+				         		foorName="板凳";
+				         	}else  if(currentPage*10+i==length-2){
+				         		foorName="地板";
+				         	}else{
+				         		foorName="";
+				         	}
+				         	//alert(currentPage);
+				         	floorGrade=length-currentPage*10-i+1+'#';
+				         	i++;
+							//alert(i);
+				         	var t='<li class=\'clearfix\' post-id="442550234" id="1741" float-id="1741" u-id="8036169"><div class=\'reply_list_img\'><a href="/pouruan/User/Message/send.do?toUserId='+userId+'" class=\'headportrait\' target="_blank" rel="noopener noreferrer">';
+							t+='<img class="user_head" data-original="'+portrait_img+'?&width=50&height=50" src="'+portrait_img+'" /></a></div><div class=\'reply_list_con\'>';
+							t+='<div class=\'auth_msg clearfix\'><a href="${base}/User/Message/send.do?toUserId='+userId+'" class=\'auth_name\' target="_blank" rel="noopener noreferrer">'+userName+'</a><span class="at"> 发表于</span><span class=\'time\'>'+date+'</span>';
+							
+							if(foorName=='沙发'){
+								t+='<span class=\'reply_list_float shafa\'>沙发</span>';
+							}else
+							if(foorName=='地板'){
+								t+='<span class=\'reply_list_float diban\'>地板</span>';
+							}else
+							if(foorName=='板凳'){
+								t+='<span class=\'reply_list_float bandeng\'>板凳</span>';
+							}else{t+='<span class=\'reply_list_float\'>'+floorGrade+'</span>';}
+							t+='</div><div class=\'reply_txt\'><p>'+content+'</p></div></p></div></li>';
+						  reply=reply+t;
+				         }
+		             }
+		             document.getElementById("replys").innerHTML=reply;
+		           }
+		         });
+		}	
+		getReply();
+	</#if> 	         
+          </script>
+	 <script type="text/javascript">
+        // 阻止输出log
+        // wangEditor.config.printLog = false;
+
+        var editor = new wangEditor('editor-trigger');
+        // 上传图片
+        editor.config.uploadImgUrl = './uploadImg.do?_csrf=${_csrf.token}';
+        editor.config.uploadParams = {
+             //_csrf: '${_csrf.token}',
+            // token2: '12345'
+        };
+        editor.config.uploadHeaders = {
+            // 'Accept' : 'text/x-json'
+        }
+         editor.config.uploadImgFileName = 'imgFile';
+
+        // 隐藏网络图片
+        // editor.config.hideLinkImg = true;
+        // 表情显示项
+        editor.config.emotionsShow = 'value';
+        editor.config.emotions = {
+            'default': {
+                title: '默认',
+                data: './emotions.data'
+            },
+            'weibo': {
+                title: '微博表情',
+                data: [
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+                        value: '[草泥马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+                        value: '[神马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+                        value: '[浮云]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/c9/geili_thumb.gif',
+                        value: '[给力]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/f2/wg_thumb.gif',
+                        value: '[围观]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/70/vw_thumb.gif',
+                        value: '[威武]'
+                    }
+                ]
+            }
+        };
+                // 插入代码时的默认语言
+        // editor.config.codeDefaultLang = 'html'
+
+        // 只粘贴纯文本
+         editor.config.pasteText = true;
+
+
+        // onchange 事件
+        editor.onchange = function () {
+            //console.log(this.$txt.html());
+            if(this.$txt.html().length>10000){
+            	document.getElementById("tishi-reply").className="alert alert-danger";
+            	document.getElementById("tishi-reply").innerHTML="回复内容过长";
+            	document.getElementById("submit").disabled = true;
+            }else{
+           		 document.getElementById("tishi-reply").className="";
+                document.getElementById("tishi-reply").innerHTML="";
+           		document.getElementById("submit").disabled = false;
+            }
+        };
+
+
+        editor.create();
+          </script>
+
+     <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/personLayer.js"></script> 
+  <script type="text/javascript" src="${base}/res/templet/extend/index/statics/js/base/slide.js"></script> 
+
+</div>
+			</div>
+			
+		</div>
+		<div class='footer brief'>
+	
+			<div class='wrap_990'>
+				<a href="#" class='link'>14328.com</a>
+				<span>京ICP证14328号 京ICP备14328号 <a target="_blank" rel="noopener noreferrer" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134" style="cursor:pointer;color: white;">京公网安备11010802020134号</a></span>
+			</div>
+		</div>
+	</body>
+ </html>
+

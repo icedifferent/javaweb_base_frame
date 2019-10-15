@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>编辑信息</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="shezhi"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>		
+					<h3 class="blank1">修改个人资料</h3>
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+								<form action="./editInfo.do" method="POST" class="form-horizontal">
+				<div class="form-group" id="reform-group-userName">
+				<label class="col-md-2 control-label">姓名：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						<span class="input-group-addon">
+					
+							<i class="fa fa-user"></i>
+						</span>
+						<input type="text"  name="userName" id="userName" maxlength="10" required=" "  class="form-control1" placeholder="姓名" value="${userInfo.userName}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="col-sm-2 jlkdfj1">
+						<p class="help-block" id="tishi-userName"></p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+								<div class="form-group" id="reform-group-email">
+				<label class="col-md-2 control-label">Email Address</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						<span class="input-group-addon">
+							<i class="fa fa-envelope-o"></i>
+						</span>
+						<input id="email" name="email"   required=" " maxlength="64" class="form-control1" type="text" placeholder="Email Address" value="<#if userInfo.email??>${userInfo.email}</#if>" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="col-sm-2 jlkdfj1">
+						<p class="help-block" id="tishi-email"></p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+							<input type="hidden" name="_csrf" value="${_csrf.token}">
+							<div class="panel-footer">
+							<div class="row">
+								<div class="col-sm-8 col-sm-offset-2">
+								<input id="submit" class="btn-success btn" type="submit" value="修改">
+								</div>
+							   </div>
+							</div>
+								</form>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+	<script type="text/javascript">
+
+              function validate() {
+             		var userName = document.getElementById("userName").value;
+                 	var  re = /^[\u4E00-\u9FA5]{2,4}$/;
+				    if(re.test(userName)){
+				     	 document.getElementById("reform-group-userName").className+="form-group has-success";
+                     	 document.getElementById("tishi-userName").innerHTML="正确";
+                     	  document.getElementById("submit").disabled = false;
+                     	  return ;
+				    }else{
+				    	 document.getElementById("reform-group-userName").className+="form-group has-error";
+				    	 document.getElementById("tishi-userName").innerHTML="格式错误";
+				    	 document.getElementById("submit").disabled = true;
+				    	 return ;
+				    }
+					var email = document.getElementById("email").value;
+					      re =  /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+   					 if(re.test(email)){
+				     	 document.getElementById("reform-group-email").className+="form-group has-success";
+                     	 document.getElementById("tishi-email").innerHTML="正确";
+                     	  document.getElementById("submit").disabled = false;
+                     	  return ;
+				    }else{
+				    	 document.getElementById("reform-group-email").className+="form-group has-error";
+				    	 document.getElementById("tishi-email").innerHTML="格式错误";
+				    	 document.getElementById("submit").disabled = true;
+				    	 return ;
+				    }
+              }
+          </script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>
+

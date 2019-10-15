@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.pouruan.web.entity.extend">
+	<class name="Music" table="`music`">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="java.lang.Integer" column="`Id`"> <generator class="identity"/></id>
+	 	<property name="name" column="`name`" type="java.lang.String" not-null="true"  />
+		<property name="url" column="`url`"  type="java.lang.String" not-null="true" />
+		<property name="lastPlayTime" column="`last_play_time`"  type="java.sql.Timestamp" not-null="true" />
+ 		<property name="lyric"  column="`lyric`"  type="java.lang.String" not-null="true"/>
+ 		<property name="cover"  column="`cover`"  type="java.lang.String" not-null="true"/>
+ 		<property name="playCount"  column="`play_count`"  type="java.lang.Integer" not-null="true"/>
+ 		<property name="player"  column="`player`"  type="java.lang.String" not-null="true"/>
+ 		<property name="album"  column="`album`"  type="java.lang.String" />
+	</class>
+</hibernate-mapping>

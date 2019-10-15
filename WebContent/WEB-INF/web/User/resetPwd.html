@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户中心</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="shezhi"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>			
+					<h3 class="blank1">修改密码</h3>
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+								<form action="./resetPwd.do" method="POST" class="form-horizontal">
+								<div class="form-group">
+										<label for="focusedinput" class="col-sm-2 control-label">旧密码</label>
+										<div class="col-md-8">
+									<div class="input-group input-icon right in-grp1">
+										<span class="input-group-addon">
+											<i class="fa fa-key"></i>
+											</span>
+											<input type="password"  class="form-control1"  name="oldPwd"  placeholder="oldPwd">
+									</div>
+								</div>
+								</div>
+								<div class="form-group">
+								<label for="focusedinput" class="col-sm-2 control-label">新密码</label>
+								<div class="col-md-8">
+									<div class="input-group input-icon right in-grp1">
+										<span class="input-group-addon">
+											<i class="fa fa-key"></i>
+											</span>
+											<input type="password" id="password"  class="form-control1"  name="newPwd"  placeholder="newPwd">
+									</div>
+								</div>
+								</div>
+								<div class="form-group" id="reform-group">
+										<label for="focusedinput" class="col-sm-2 control-label">确认密码</label>
+										<div class="col-md-8">
+											<div class="input-group input-icon right in-grp1">
+											<span class="input-group-addon">
+											<i class="fa fa-key"></i>
+											</span>
+											<input type="password" id="repassword"  class="form-control1" name="newPwd"  placeholder="reNewPwd" onkeyup="validate()">
+									</div>
+									
+								
+								</div>
+										<div class="col-sm-2 jlkdfj1">
+								<p class="help-block" id="tishi"></p>
+							</div>
+							<div class="clearfix"> </div>
+								</div>
+							<input type="hidden" name="_csrf" value="${_csrf.token}">
+							<div class="panel-footer">
+							<div class="row">
+								<div class="col-sm-8 col-sm-offset-2">
+								<input id="submit" class="btn-success btn" type="submit" value="修改密码">
+								</div>
+							   </div>
+							</div>
+								</form>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+	<script type="text/javascript">
+              function validate() {
+                  var pwd1 = document.getElementById("password").value;
+                  var pwd2 = document.getElementById("repassword").value;
+
+    			  if(pwd1.length<6||pwd1.length>32){
+    			      document.getElementById("reform-group").className+="form-group has-error";
+    			      document.getElementById("tishi").innerHTML="密码长度应该在6-32个字符之间";
+                      document.getElementById("submit").disabled = true;
+                      return ;
+    			  }
+                  if(pwd1 == pwd2) {
+                 	  document.getElementById("reform-group").className+="form-group has-success";
+                      document.getElementById("tishi").innerHTML="两次密码相同";
+                      document.getElementById("submit").disabled = false;
+                  }
+                  else {
+                   document.getElementById("reform-group").className+="form-group has-error";
+                    document.getElementById("tishi").innerHTML="两次密码不相同";
+                    document.getElementById("submit").disabled = true;
+                  }
+              }
+          </script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>
+

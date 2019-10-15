@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>阅读消息</title>
+<#include "/commonTemplet/header.html"/>
+
+
+
+
+</head>
+ <#assign leftside ="zhuye"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	
+	</div>
+	<!--body wrapper start-->
+		<!-- //header-ends -->
+			<div id="page-wrapper">
+				<div class="graphs">
+					
+		<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+			 </#if>	
+					<div class="grid_3 grid_4">
+					<#if message??>
+					  <h3>${message.fromUser.userName}(ID:${message.fromUser.userId}) to ${message.toUser.userName}(ID:${message.toUser.userId})</h3>
+					  <div class="bs-example" style="word-break:break-all;">
+						内容：${message.content}
+						<div class="sub_home_right">
+								<p><a href="./send.do?toUserId=${message.fromUser.userId}">回复他</a>|${message.date}</p>
+						</div>
+					  </div>
+					  </#if>	
+					 </div>	
+				</div>
+			
+			  </div>
+	<!--body wrapper end-->
+	</div>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

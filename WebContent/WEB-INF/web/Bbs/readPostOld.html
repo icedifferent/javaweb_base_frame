@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>阅读帖子</title>
+	<!--xss过滤模块  -->
+<script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/xss.js"></script>
+  <link rel="stylesheet" href="${base}/res/templet/extend/Bbs/css/forum.css" type='text/css' />
+<link rel="stylesheet" type="text/css" href="${base}/res/templet/extend/wangEditer/css/wangEditor.min.css">
+    <style type="text/css">
+        #editor-trigger {
+            height: 200px;
+            /*max-height: 500px;*/
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+    <script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/lib/jquery-1.10.2.min.js"></script>
+    
+    <script type="text/javascript" src="${base}/res/templet/extend/wangEditer/js/wangEditor.js"></script>
+    
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="luntan"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+ 	
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	
+	</div>
+	<!--body wrapper start-->
+		<!-- //header-ends -->
+			<div id="page-wrapper">
+				<div class="graphs">
+					
+		<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+		</#if>	
+		
+					<div class="grid_3 grid_4 floor">
+		<#if post??>	
+
+		<table width="100%" style="table-layout:fixed;" class="floor_table">
+		
+		<tr>
+		<td rowspan="2" class="floor_left">
+		<div class="floor_info">
+				<div class="floor_info_top J_floor_info_top">
+					<!--头像-->
+					<div class="face J_floor_face">
+						<div class="headIcon"><img src="<#if post?? &&post.user.portrait_img??>${base}/res/upload/portrait/${post.user.portrait_img}<#else>${base}/res/templet/cropper/logo.jpg</#if>" class="J_avatar" data-type="middle" alt="${post.user.userName}"></div>
+						
+					</div>
+				</div>
+		</div>
+		</td>
+		<td class="box_wrap floor_right">
+		<!-- 用户信息、帖子信息 -->
+		<div class="cc floor_firstline J_floor_topline">
+		<!--用户名-->
+				<div class="fl post_log">
+				<a href="${base}/User/Message/send.do?toUserId=${post.user.userId}" class="piece username J_user_card_show offline" data-uid="${post.user.userId}">${post.user.userName}</a>
+					
+						<span class="piece">
+							<span data-langur="b_read_postat">发布于</span><span class="postatNum">${post.addDate}</span>
+						</span>
+				</div>
+				<div class="post_num">
+					<span class="replies">
+						<em id="topicRepliesNum">${post.replyCount}</em></span>
+						<span class="slant">/</span><span class="hits"><em>${post.readTimes}</em>
+					</span>
+				</div>
+			</div>	
+		<!-- 用户信息、帖子信息end-->			
+		<div class="floor_title cc floor_secondline">		
+				 <h1 id="J_post_title" ></h1>
+			<span class="floor_honor posts_icon"></span>
+		</div>
+		<hr >
+					<div id="J_read_main" class="floor_body">
+					<div class="editor_content" style="word-break:break-all;">
+						<div id="contentAfterCheck"></div>
+					</div>
+						<div class="sub_home_right">
+					<p><a href="./postList.do?moduleId=${post.module.id}">${post.module.name}</a>|<a href="./postList.do">所有帖子</a></p>
+					</div>
+				 </div>
+		</td>
+			</tr>	
+		</table>		
+		<hr />	 
+		<!--回复列表  -->
+		<div  id="replys">
+		</div>
+		<!--回复列表  end-->
+		<#if count gt 10>
+		  <!-- 导入自定义ftl -->  
+	    <#import "/freeMarkFtl/page.ftl" as cast/>  
+	    <!-- 使用该标签 -->  
+	    <@cast.pager pageNo=replyPageNo pageSize=10 toURL="./readPost.do" recordCount=count/>  
+		</#if>
+		
+		<div id="tishi-reply" ></div>
+			<form action="./addReply.do" method="POST" class="com-mail">
+				<hr>
+				<textarea rows="2" id="editor-trigger" name="content" placeholder="内容，5万字以内哦" maxlength="10000" class="form-control1 control2"></textarea>
+				<hr>
+				<input type="hidden" name="_csrf"  id="_csrf" value="${_csrf.token}">
+				<input type="hidden" name="replyPageNo"  id="replyPageNo" value="${replyPageNo}">
+				<input type="hidden" name="postId"  id="postId" value="${postId}">
+				<div  class="header_stats"> <input type="submit" id="submit" value="回复"></div>
+		</form>	
+		</#if>
+					 </div>	
+				
+				</div>
+			
+			  </div>
+	<!--body wrapper end-->
+	</div>
+	
+	<script type="text/javascript">
+	 <#if post??>
+	 var post;
+	function getPost(){
+		         $.ajax({
+		             type: "POST",
+		             url: "${base}/Bbs/getPost.do",
+		             data: {postId:${post.id},_csrf:$("#_csrf").val()},
+		             dataType: "json",
+		             success: function(data){
+		             //alert(data.post.title);
+		             data=data.post;
+		             			if(data.status!=0){
+									
+					var title = data.title;
+                 	title = filterXSS(title, {
+						  whiteList:          [],        // 白名单为空，表示过滤所有标签
+						  stripIgnoreTag:     true,      // 过滤所有非白名单标签的HTML
+						  stripIgnoreTagBody: ['script'] // script标签较特殊，需要过滤标签中间的内容
+					});
+					document.getElementById("J_post_title").innerHTML=title;
+					
+					
+					//内容
+					var content =data.content;
+					
+                 	content = filterXSS(content, {
+						 whiteList: {
+   							 a: ['href', 'title', 'target','style','face'],
+   							 p: ['style','face'],
+   							 span: ['style','face'],
+   							 td: ['style','face'],
+   							 tr: ['style','face'],
+   							 pre: ['style','face'],
+   							 code: ['class'],
+   							 img: ['src','alt','style','class'],
+   							 br: [],
+   							 iframe: ['height','width','src','frameborder' ,'allowfullscreen']
+ 						 },		 
+ 						 stripIgnoreTag:     true,      // 过滤所有非白名单标签的HTML
+						 stripIgnoreTagBody: ['script'] // script标签较特殊，需要过滤标签中间的内容
+					});
+					//alert(content);
+					document.getElementById("contentAfterCheck").innerHTML=content;
+     
+		             			} else{
+		             				alert("帖子不存在");
+		             			}
+		             }
+		         });
+		}
+		getPost();
+		function getReply(){
+		         $.ajax({
+		             type: "POST",
+		             url: "${base}/Bbs/getReply.do",
+		             data: {postId:${post.id},pageNo:$("#replyPageNo").val(),_csrf:$("#_csrf").val()},
+		             dataType: "json",
+		             success: function(data){
+		             var reply="";
+		             var i=1;
+		             //var length=data.replyList.length;
+		             var length=${count};
+		             var currentPage=${replyPageNo}-1;
+		             for(var o in data){  
+				         for(var j in data[o]){  
+				         //	alert(data[o][j]['replyUser'].userName);
+				         	var userName=data[o][j]['replyUser'].userName;
+				         	var userId=data[o][j]['replyUser'].userId;
+				         	var portrait_img=data[o][j]['replyUser'].portrait_img;
+				         	if(portrait_img==''){
+				         		portrait_img='${base}/res/templet/cropper/logo.jpg';
+				         	}else{
+				        	 	portrait_img='${base}/res/upload/portrait/'+portrait_img;
+				         	}
+				         	var date=data[o][j].date;
+				         	var content=data[o][j].content;
+				         	
+				         	var id=data[o][j].id;
+				         	if(currentPage*10+i==length){
+				         		foorName="沙发";
+				         	}else  if(currentPage*10+i==length-1){
+				         		foorName="板凳";
+				         	}else  if(currentPage*10+i==length-2){
+				         		foorName="底板";
+				         	}else{
+				         		foorName="";
+				         	}
+				         	floorGrade=length-currentPage*10-i+1+'F';
+				         	i++;
+				         	
+				         	
+				         	var t='<div class="floor isfloor cc J_read_floor" id="read_5953621" data-isid="read_2"><table width="100%" style="table-layout:fixed;" class="floor_table"><tr ><td rowspan="2" class="floor_left"><div class="floor_info"><div class="floor_info_top J_floor_info_top"><div class="face J_floor_face"><div class="headIcon"><img src="'+portrait_img+'" class="J_avatar" data-type="middle" alt="'+userName+'"></div></div></div></div></td><td class="box_wrap floor_right"><div class="floor_topline"><div class="cc floor_firstline J_floor_topline"><div class="fl post_log"><a href="${base}/User/Message/send.do?toUserId='+userId+'" class="piece username J_user_card_show offline" data-uid="'+userId+'">'+userName+'</a><span class="piece"><span data-langur="b_read_postat">发布于</span><span class="postatNum">'+date+'</span></span></div><div style="position:relative;"><span class="lou J_floor_copy" title="复制此楼地址" data-hash="read_5988326"><span class="louA">'+foorName+'</span><span class="louB">'+floorGrade+'</span></span></div></div></div><div id="J_read_main" class="floor_body"><div class="fr"></div><div class="editor_content" style="word-break:break-all;">'+content+'</div></div></</tr></table></div'; 
+		   				   t+='<tr><td class="box_wrap floor_bottom" valign="bottom"><div  class="chaCat J_chaCat"></div><div id="app_read_floor_1"></div><div class="floor_bottom_tips cc" id=""><div class="flr_mbtns"><div class="flr_mbtn_main"></div></div><div class="lorbtnA flr_bbtn like"><span class="lorbtnButter"><span class="rbbleft"></span><span class="rbbright"></span></span></div></div><div style="display:none;" class="J_reply_wrap" id="J_reply_wrap_5953620"><div class="pop_loading"></div></div></td></tr>';
+		   				   t+='<a name="5953622"></a><div id="cloudwind_read_readfloor_5953622"></div>';
+		   				   reply=reply+t;
+				         }
+		             }
+		             document.getElementById("replys").innerHTML=reply;
+		           }
+		         });
+		}	
+		getReply();
+	</#if>
+             	         
+          </script>
+	 <script type="text/javascript">
+        // 阻止输出log
+        // wangEditor.config.printLog = false;
+
+        var editor = new wangEditor('editor-trigger');
+        // 上传图片
+        editor.config.uploadImgUrl = './uploadImg.do?_csrf=${_csrf.token}';
+        editor.config.uploadParams = {
+             //_csrf: '${_csrf.token}',
+            // token2: '12345'
+        };
+        editor.config.uploadHeaders = {
+            // 'Accept' : 'text/x-json'
+        }
+         editor.config.uploadImgFileName = 'imgFile';
+
+        // 隐藏网络图片
+        // editor.config.hideLinkImg = true;
+        // 表情显示项
+        editor.config.emotionsShow = 'value';
+        editor.config.emotions = {
+            'default': {
+                title: '默认',
+                data: './emotions.data'
+            },
+            'weibo': {
+                title: '微博表情',
+                data: [
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif',
+                        value: '[草泥马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif',
+                        value: '[神马]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif',
+                        value: '[浮云]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/c9/geili_thumb.gif',
+                        value: '[给力]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/f2/wg_thumb.gif',
+                        value: '[围观]'    
+                    },
+                    {
+                        icon: 'http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/70/vw_thumb.gif',
+                        value: '[威武]'
+                    }
+                ]
+            }
+        };
+                // 插入代码时的默认语言
+        // editor.config.codeDefaultLang = 'html'
+
+        // 只粘贴纯文本
+         editor.config.pasteText = true;
+
+
+        // onchange 事件
+        editor.onchange = function () {
+            //console.log(this.$txt.html());
+            if(this.$txt.html().length>10000){
+            	document.getElementById("tishi-reply").className="alert alert-danger";
+            	document.getElementById("tishi-reply").innerHTML="回复内容过长";
+            	document.getElementById("submit").disabled = true;
+            }else{
+           		 document.getElementById("tishi-reply").className="";
+                document.getElementById("tishi-reply").innerHTML="";
+           		document.getElementById("submit").disabled = false;
+            }
+        };
+
+
+        editor.create();
+          </script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

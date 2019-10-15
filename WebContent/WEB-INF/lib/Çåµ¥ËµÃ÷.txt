@@ -1,0 +1,9 @@
+
+commons-lang-2.4.jar  ----一些常用的编码等
+jcaptcha-1.0.jar      ----------验证码
+commons-collections-3.1.jar----验证码的那个包需要用到，否则 nested exception is java.lang.NoClassDefFoundError: org/apache/commons/collections/FastHashMap
+commons-io-1.4.jar   使用ByteArrayOutputStream时用到
+commons-fileupload-1.2.1.jar 文件上传所需
+mailapi-1.4.2.jar    邮件发送所需要
+sigar.jar  获取系统状态信息
+jmagick.jar 头像处理

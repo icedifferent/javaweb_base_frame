@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>编辑系统配置信息</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="peizhi"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+				<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>		
+					<h3 class="blank1">修改系统配置</h3>
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+								<form action="./editConfig.do" method="POST" class="form-horizontal">
+				<div class="form-group" id="reform-group-webTitle">
+				<label class="col-md-2 control-label">网站标题：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="webTitle" id="webTitle" maxlength="30" required=" "  class="form-control1" placeholder="网站标题" value="${config.webTitle}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+		
+			
+			<div class="form-group" id="reform-group-webDescription">
+				<label class="col-md-2 control-label">网站描述：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="webDescription" id="webDescription" maxlength="100" required=" "  class="form-control1" placeholder="网站描述"  value="${config.webDescription}"  onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			
+			</div>
+			<div class="form-group" id="reform-group-webKeyWord">
+			<label class="col-md-2 control-label">网站关键词：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="webKeyWord" id="webKeyWord" maxlength="100" required=" "  class="form-control1" placeholder="网站关键词" value="${config.webKeyWord}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			
+			
+			<div class="form-group" id="reform-group-domain">
+			<label class="col-md-2 control-label">域名：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="domain" id="domain" maxlength="30" required=" "  class="form-control1" placeholder="网站当前域名" value="${config.domain}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			
+			
+			<div class="form-group" id="reform-group-maxSendEmailTimes">
+			<label class="col-md-2 control-label">IP邮件发送次数：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+					
+						<input type="text"  name="maxSendEmailTimes" id="maxSendEmailTimes" maxlength="2" required=" "  class="form-control1" placeholder="同一IP一天内最多可以发送的邮件次数" value="${config.maxSendEmailTimes}"  onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			
+		
+			<div class="form-group" id="reform-group-maxSendMesTimes">
+			<label class="col-md-2 control-label">IP手机发送次数：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="maxSendMesTimes" id="maxSendMesTimes" maxlength="2" required=" "  class="form-control1" placeholder="同一IP一天内最多可以发送的短信验证码次数"  value="${config.maxSendMesTimes}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+			<div class="form-group" id="reform-group-maxErrorTimes">
+			<label class="col-md-2 control-label">错误多少次需要验证码：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="maxErrorTimes" id="maxErrorTimes" maxlength="2" required=" "  class="form-control1" placeholder="登录错误多少次需要验证码" value="${config.maxErrorTimes}" onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+			<h2>邮件配置</h2>
+			
+			<div class="form-group" id="reform-group-emailHost">
+			<label class="col-md-2 control-label">邮箱服务器地址：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="emailHost" id="emailHost" maxlength="100" required=" "  class="form-control1" placeholder="邮箱服务器地址" value="${config.emailHost}"  onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			<div class="form-group" id="reform-group-emailUserName">
+			<label class="col-md-2 control-label">邮箱用户名：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						<input type="text"  name="emailUserName" id="emailUserName" maxlength="100" required=" "  class="form-control1" placeholder="邮箱用户名" value="${config.emailUserName}"  onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+			<div class="form-group" id="reform-group-emailPwd">
+			<label class="col-md-2 control-label">邮件密码：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="emailPwd" id="emailPwd" maxlength="100" required=" "  class="form-control1" placeholder="邮箱密码" value="${config.emailPwd}"   onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+				<div class="form-group" id="reform-group-emailTitle">
+			<label class="col-md-2 control-label">邮件标题：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						
+						<input type="text"  name="emailTitle" id="emailTitle" maxlength="100" required=" "  class="form-control1" placeholder="邮件标题" value="${config.emailTitle}"  onkeyup="validate()">
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+			
+			
+						<div class="form-group" id="reform-group-emailPwdContent">
+			<label class="col-md-2 control-label">邮件找回密码内容：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						<textarea rows="2"  required=" "  name="emailPwdContent" id="emailPwdContent"  placeholder="邮件找回密码的发送内容"  maxlength="255"  onkeyup="validate()"  class="form-control1 control2">${config.emailPwdContent}</textarea>			
+						</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+						<div class="form-group" id="reform-group-emailActContent">
+			<label class="col-md-2 control-label">邮件激活内容：</label>
+				<div class="col-md-8">
+					<div class="input-group input-icon right in-grp1">
+						<textarea rows="2"  required=" "   name="emailActContent" id="emailActContent"  maxlength="255" placeholder="邮件激活用户的发送内容"  onkeyup="validate()" class="form-control1 control2">${config.emailActContent}</textarea>
+								</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>	
+			
+			
+			
+			
+			
+							<input type="hidden" name="Id"  id="Id" value="${config.id}">
+							<input type="hidden" name="_csrf" value="${_csrf.token}">
+							<div class="panel-footer">
+							<div class="row">
+								<div class="col-sm-8 col-sm-offset-2">
+								<input id="submit" class="btn-success btn" type="submit" value="确定修改">
+								</div>
+							   </div>
+							</div>
+								</form>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+	<script type="text/javascript">
+
+              function validate() {
+             		var maxSendMesTimes = document.getElementById("maxSendMesTimes").value;
+             		var maxErrorTimes = document.getElementById("maxErrorTimes").value;
+             		var maxSendEmailTimes = document.getElementById("maxSendEmailTimes").value;
+             	  	var  re = /^[0-9]*$/;
+				    if((re.test(maxSendMesTimes))&&(re.test(maxErrorTimes))&&(re.test(maxSendEmailTimes))){
+                     	  document.getElementById("submit").disabled = false;
+                     	  return ;
+				    }else{
+				    		alert("maxSendMesTimes  maxErrorTimes  maxSendEmailTimes只能为数字哦");
+				    	 document.getElementById("submit").disabled = true;
+				    	 return ;
+				    }
+					
+              }
+          </script>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>
+

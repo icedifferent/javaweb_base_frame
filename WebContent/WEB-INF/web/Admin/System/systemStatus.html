@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户中心</title>
+<link href="${base}/res/templet/css/getPhoneCodeCss/weui.min.css" rel='stylesheet' type='text/css' />
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="systemStatus"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	
+	</div>
+	<!--body wrapper start-->
+		<!-- //header-ends -->
+			<div id="page-wrapper">
+				<div class="graphs">
+					<h3 class="blank1">系统状态</h3>
+	  <#if statusMap??>  
+	  <#list statusMap?keys as key> 
+                <#assign minList = statusMap[key]>   
+					<div class="grid_3 grid_4">
+					  <div class="bs-example">
+						<table class="table">
+						  <tbody> 
+						  <#if minList??>  
+					
+						    <#list minList as value>  
+						          <tr> ${value} </tr><br />
+						    </#list>  
+   						 </#if>  
+						  </tbody>
+						</table>
+					  </div>	
+					 </div>	
+			</#list>  
+		</#if>  		 
+	
+				</div>
+			
+			  </div>
+	<!--body wrapper end-->
+	</div>
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+</html>

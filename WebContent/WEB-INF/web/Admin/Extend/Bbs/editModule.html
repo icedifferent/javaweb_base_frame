@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>论坛版块管理</title>
+<#include "/commonTemplet/header.html"/>
+</head>
+<body>
+ <#assign leftside ="luntanguanli"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+		<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+		<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>				
+					<h3 class="blank1">增加论坛版块</h3>
+						<div class="tab-content">
+							  <div class="panel-body panel-body-inputin">
+								<form  action="./editModule.do"  method="POST" class="form-horizontal">
+				<div class="form-group" id="reform-group-userName">
+				<label class="col-md-2 control-label">版块名称：</label>
+				<div class="col-md-8">
+						<div class="input-group input-icon right in-grp1">
+							<span class="input-group-addon">
+						
+								<i class="fa fa-user"></i>
+							</span>
+							<input type="text"  name="name" id="name" class="form-control1" value="<#if oldModule??>${oldModule.name}</#if>" maxlength="10" placeholder="版块名称" >
+						</div>
+					</div>
+
+					<div class="col-sm-2 jlkdfj1">
+								<p class="help-block" id="tishi-userId"></p>
+						</div>
+						<div class="clearfix"> </div>
+				</div>
+							
+							<#if oldModule??><input type="hidden" name="moduleId" value="${oldModule.id}"></#if>
+						
+							<input type="hidden" name="_csrf" value="${_csrf.token}">
+							<div class="panel-footer">
+							<div class="row">
+								<div class="col-sm-8 col-sm-offset-2">
+								<input id="submit" class="btn-success btn" type="submit" value="增加or修改">
+								</div>
+							   </div>
+							</div>
+								</form>
+							</div>
+					   </div>
+				</div>
+		</div>
+	<!--body wrapper end-->
+	</div>
+
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+
+
+
+</body>
+</html>

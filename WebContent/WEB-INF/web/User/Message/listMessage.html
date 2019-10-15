@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消息管理</title>
+<#include "/commonTemplet/header.html"/>
+
+</head>
+ <#assign leftside ="xiaoxi"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+
+			<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>	
+					<h3 class="blank1"><a href="./listMessage.do">我收到的消息</a>|<a href="./listMessage.do?sended=true">我发出去的消息</a></h3>
+					
+					
+					 <div class="xs tabls">
+					 <div class="bs-example4" data-example-id="contextual-table">
+					 	
+						<table class="table" style="table-layout:fixed;word-wrap:break-word;">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>内容</th>
+							  <th>发送者ID</th>
+							   <th>发送者昵称</th>
+							   <th>时间</th>
+							  <th><a href="./listMessage.do<#list RequestParameters?keys as key>?${key}=${RequestParameters[key]}</#list>?&ifRead=0">是否已读</a></th>
+							  <th>操作</th>
+							   <th>其他</th>
+							</tr>
+						  </thead>
+						  <tbody>
+						   <#list messageList as message>
+						   <tr<#if message_index%2==0> class="active"</#if>>
+						    <th scope="row">${message_index+1}</th>
+           		 <td style=" white-space:nowrap;overflow:hidden;text-overflow: ellipsis;"> ${message.content}</td>
+            	 <td> ${message.fromUser.userId} </td>
+            	 <td> ${message.fromUser.userName} </td>
+            	 <td> ${message.date} </td>
+            	  <td> <#if message.ifRead==0><font color='red'>未读</font><#else><font color='green'>已读</font></#if> </td>
+  				 <td> <a href="./readMessage.do?messageId=${message.messageId}">查看</a></td>
+				<td><a href="./send.do?toUserId=${message.fromUser.userId}">回复他</a></td>
+				</tr>
+         </#list>
+						  </tbody>
+						</table>
+						
+				
+					   </div>
+					 </div>
+					     <!-- 导入自定义ftl -->  
+    <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./listMessage.do" recordCount=messageSize/>  
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+     <beans xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"  
+        xmlns:mvc="http://www.springframework.org/schema/mvc"  	
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd  
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">  
+       <!--这里应该是SpringMVC的配置  -->
+        <!-- 自动扫描的包名 Spring 和springmvc是分开扫描的，这里先扫描 aopService
+  		      因为Spring的Bean扫描和Spring-MVC的Bean扫描是分开的, 两者的Bean位于两个不同的Application,
+  		       而且Spring-MVC的Bean扫描要早于Spring的Bean扫描, 所以当Controller Bean生成完成后, 再执行Spring的Bean扫描,
+  		    Spring会发现要被AOP代理的Controller Bean已经在容器中存在, 配置AOP就无效了.
+			同样这样的情况也存在于数据库事务中, 如果Service的Bean扫描配置在spring-mvc.xml中, 
+			而数据库事务管理器配置在application.xml中, 会导致数据库事务失效, 原理一样.
+        -->  
+         <context:component-scan base-package="com.pouruan.app.api"></context:component-scan>  
+        <context:component-scan base-package="com.pouruan.web.action"></context:component-scan>  
+        <context:component-scan base-package="com.pouruan.web.service.aopService"></context:component-scan>  
+        <!-- 默认的注解映射的支持 -->  
+        <mvc:annotation-driven />  
+        <aop:aspectj-autoproxy></aop:aspectj-autoproxy> <!--aop支持，已经导入所需的包了，如果要使用，去掉注释就可以了  -->
+        <!-- Spring mvc错误处理 ,这里貌似不能处理404，去web.xml吧-->
+       	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+			 <!-- 优先级设置，否则被默认的DefaultHandlerExceptionResolver处理 -->
+			<property name="order" value="1" />  
+			<!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
+			<property name="defaultErrorView" value="/web/error/404"/> 
+			<!-- 输出调试日志级别 -->
+			 <property name="warnLogCategory" value="WARN"></property>
+	 		<property name="exceptionMappings">
+				<props>
+					<prop key="org.springframework.web.bind.MissingServletRequestParameterException">/web/error/requiredParameter</prop>
+					<prop key="org.springframework.beans.TypeMismatchException">/web/error/mismatchParameter</prop>
+					<prop key="org.springframework.validation.BindException">/web/error/bindException</prop>
+					<prop key="org.springframework.dao.DataIntegrityViolationException">/web/error/integrityViolation</prop>
+					<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/web/error/maxUploadSizeExceededException</prop>
+				
+				</props> 
+			</property> 
+  	  <property name="defaultStatusCode" value="404"/><!-- 表示在发生上述异常时默认的HttpServletResponse的返回码是多少，默认是200 -->  
+		</bean>
+        <!-- jsp视图解释类 -->  
+         <bean  
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+            <property name="prefix" value="/web/" />  
+            <!-- 可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑   -->
+            <property name="suffix" value=".jsp" />  
+        </bean>
+       <!-- html视图解析器 必须先配置freemarkerConfig,注意html是没有prefix前缀属性的(貌似现在有了) 
+       		所以需要先配置freemarkerConfig，前缀保存在freemarkerConfig中
+       -->
+	    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+	        <property name="templateLoaderPath">  
+	            <value>/WEB-INF/</value>  
+	        </property>  
+	         <!-- 设置页面中文乱码问题 -->
+	        <property name="freemarkerSettings"> 
+		        <props>
+		       	 	<prop key="defaultEncoding">UTF-8</prop> 
+					<prop key="template_update_delay">0</prop>
+					<prop key="defaultEncoding">UTF-8</prop>
+					<prop key="url_escaping_charset">UTF-8</prop>
+					<prop key="locale">zh_CN</prop>
+					<prop key="boolean_format">true,false</prop>
+					<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+					<prop key="date_format">yyyy-MM-dd</prop>
+					<prop key="time_format">HH:mm:ss</prop>
+					<prop key="number_format">0.######</prop>
+					<prop key="whitespace_stripping">true</prop>
+					<!-- 	<prop key="auto_import">/ftl/pony/index.ftl as p,/ftl/spring.ftl as s</prop> -->			</props>
+		</property>
+	    </bean>  
+<!-- 	     <bean id="htmlviewResolver"  
+	        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  -->  
+	<!-- 继承上面的，然后 增加一些默认属性-->
+	 <bean id="htmlviewResolver"  
+	        class="com.pouruan.common.web.freeMarker.RichFreeMarkerViewResolver">
+	         <property name="requestContextAttribute" value="re" />
+	         <property name="prefix" value="/web/" />  
+	        <property name="suffix" value=".html" /> 
+	        <property name="order" value="0"></property> 
+	        <!-- 解决freemarker中文乱码 -->
+	        <property name="contentType" value="text/html;charset=UTF-8"></property>         
+	 </bean>  
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+         <!--    对于静态资源,可以通过后缀名   <mvc:interceptors>
+        <mvc:interceptor >
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/**/*.js"/>
+            <mvc:exclude-mapping path="/**/*.png"/>
+            <mvc:exclude-mapping path="/back_css/**"/>
+            <mvc:exclude-mapping path="/back_js/**"/>
+            <bean class="com.ys.interceptors.DefaultInterceptors"/>
+        </mvc:interceptor>       
+         也可以通过文件夹, 加这些exclude-mapping就不会被拦截器拦截到,资源能够正常访问 
+    </mvc:interceptors> -->
+     </beans>  

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户管理</title>
+<#include "/commonTemplet/header.html"/>
+<script type="text/javascript">
+
+
+
+function clickButton(userId,status){
+         $.ajax({
+             type: "POST",
+             url: "./editUser.do",
+             data: {'userId':userId,'status':status,'_csrf':"${_csrf.token}"},
+             dataType: "json",
+             success: function(data){
+             			if(data.status!=1){
+             				alert(data.message);
+             			}else{
+             			if(status==1){
+             				document.getElementById("shenhefront"+userId).innerHTML="正常";
+             			 	document.getElementById("shenhebuttun"+userId).innerHTML="已审核";
+             			}else{
+             				document.getElementById("shenhefront"+userId).innerHTML="未审核";
+             			 	document.getElementById("shenhebuttun"+userId).innerHTML="已取消审核";
+             			}
+             			document.getElementById("shenhebuttun"+userId).disabled = true;
+             		}
+             }
+         })
+}
+</script>
+</head>
+ <#assign leftside ="yonghu"> 
+
+ <body class="sticky-header left-side-collapsed"  onload="initMap()">
+    <section>
+    <#include "/commonTemplet/left-side.html"/>
+<!-- main content start-->
+		<div class="main-content">
+			<!-- header-starts -->
+			<div class="header-section">
+			 
+			<!--toggle button start-->
+			<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+			<!--toggle button end-->
+	<#include "/commonTemplet/top-menu.html"/>
+	</div>
+	<!--body wrapper start-->
+
+			<div id="page-wrapper">
+				<div class="graphs">
+				<#if errors??>
+				 <#list errors as error>
+				 	<div class="alert alert-danger" role="alert">
+							<strong>Oh snap!</strong> ${error}
+					</div>
+				 </#list>
+				
+				</#if>
+			<#if successes??>
+				 <#list successes as success>
+				 	<div class="alert alert-success" role="alert">
+							<strong>Oh snap!</strong> ${success}
+					</div>
+				 </#list>
+				</#if>			
+					<h3 class="blank1">用户管理</h3>
+					<form action="./listUser.do" method="POST">
+							<div class="input-group input-group-ind">
+								<input type="text" name="userId" id="findVar" maxlength="11" class="form-control1 input-search" style="width:92%" placeholder="搜索">
+								<select >
+								<option onclick="changeName('userId')">ID</option>
+								<option onclick="changeName('userName')">用户名</option>
+								<option onclick="changeName('phone')">手机号码</option>
+								<option onclick="changeName('email')">邮箱</option>
+								</select>
+								
+								
+								<input type="hidden" name="_csrf" value="${_csrf.token}">
+								<span class="input-group-btn">
+									<button class="btn btn-success" type="submit"><i class="fa fa-search icon-ser"></i></button>
+								</span>
+							</div><!-- Input Group -->
+							
+					</form>
+					 <div class="xs tabls">
+					 <div class="bs-example4" data-example-id="contextual-table">
+						<table class="table">
+						  <thead>
+							<tr>
+							  <th>#</th>
+							  <th>用户ID</th>
+							  <th>用户名</th>
+							  <th>手机号码</th>
+							  <th>邮箱</th>
+							  <th><a href="./listUser.do?status=0">状态</a></th>
+							  <th>注册时间</th>
+							  <th>操作</th>
+							  
+							</tr>
+						  </thead>
+						  <tbody>
+						   <#list userList as user>
+						   <tr<#if user_index%2==0> class="active"</#if>>
+						    <th scope="row">${user_index+1}</th>
+            <td> ${user.userId}</td>
+            	 <td> ${user.userName} </td>
+            	 <td> ${user.phone} </td>
+            	  <td> <#if user.email??>${user.email}</#if> </td>
+            	  <td><#if user.status==0><font id="shenhefront${user.userId}" color='red'>未审核</font><#else><font id="shenhefront${user.userId}" color='green'>正常</font></#if></td>
+				  <td> ${user.register_date} </td>
+				  <td><#if user.status==0>
+				  <button id="shenhebuttun${user.userId}" onclick="clickButton(${user.userId},1)">
+				  <font color='green'>审核</font>
+				    </button>
+				  <#else>
+				   <button id="shenhebuttun${user.userId}" onclick="clickButton(${user.userId},0)">
+				  <font color='red'>取消审核</font></#if>
+				  
+				  </button>
+				  
+				  </td>
+				 
+				<td></td>
+				</tr>
+         </#list>
+	
+						  </tbody>
+						</table>
+						
+				
+					   </div>
+					 </div>
+					     <!-- 导入自定义ftl -->  
+    <#import "/freeMarkFtl/page.ftl" as cast/>  
+    <!-- 使用该标签 -->  
+    <@cast.pager pageNo=currentPage pageSize=10 toURL="./listUser.do" recordCount=userSize/>  
+					</div>
+				  </div>
+	<!--body wrapper end-->
+	</div>
+
+	<!--footer section start-->
+		<#include "/commonTemplet/footer.html"/>
+        <!--footer section end-->
+	</section>
+		<#include "/commonTemplet/footer-01.html"/>
+</body>
+<script type="text/javascript">
+           function changeName(v) {
+        	  document.getElementById("findVar").name=v;
+           }
+ </script>
+</html>
